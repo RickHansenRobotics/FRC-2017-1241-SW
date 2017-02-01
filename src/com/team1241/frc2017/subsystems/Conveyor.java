@@ -1,5 +1,8 @@
 package com.team1241.frc2017.subsystems;
 
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.FeedbackDeviceStatus;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.ConveyorCommand;
@@ -7,7 +10,6 @@ import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -19,13 +21,14 @@ public class Conveyor extends Subsystem {
 	// Declaring the different Victors/motors being used in the Conveyor class
 	// e.g. agitator and conveyor.
 	Victor agitator;
-	Victor conveyor;
+	
+	CANTalon conveyor;
 
 	// Declaring the piston being used e.g. the claw piston.
 	DoubleSolenoid claw;
 
-	// Declaring the encoder.
-	Encoder conveyorEncoder;
+	private boolean conveyorEncoderConnected = false;
+	
 
 	// Declaring the PIDcontroller for the conveyor.
 	public PIDController conveyorPID;
@@ -41,18 +44,16 @@ public class Conveyor extends Subsystem {
 
 		// Initializing the victors and connecting it to the physical motors.
 		agitator = new Victor(ElectricalConstants.AGITATOR_MOTOR);
-		conveyor = new Victor(ElectricalConstants.CONVEYOR_MOTOR);
+		
+		conveyor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR);
+		conveyor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 
 		// Initializing the piston and connecting it to the physical pneumatic
 		// piston.
 		claw = new DoubleSolenoid(ElectricalConstants.CLAW_PISTON_A, ElectricalConstants.CLAW_PISTON_B);
 
-		// Initializing the Encoder and connecting it to the physical encoder.
-		conveyorEncoder = new Encoder(ElectricalConstants.CONVEYOR_ENCODER_A, ElectricalConstants.CONVEYOR_ENCODER_B,
-				ElectricalConstants.conveyorEncoderReverse, Encoder.EncodingType.k4X);
-
-		conveyorEncoder.setDistancePerPulse(ElectricalConstants.conveyorEncoderDistPerTick);
-
+		
+		
 		// Initializing the PIDController for the Conveyor.
 		conveyorPID = new PIDController(NumberConstants.pConveyor, NumberConstants.iConveyor,
 				NumberConstants.dConveyor);
@@ -63,6 +64,18 @@ public class Conveyor extends Subsystem {
 		kForward = calcline.getSlope(); // Calculating Slope
 		bForward = calcline.getIntercept(); // Calculating The Point of
 											// Intersection.
+		
+		FeedbackDeviceStatus conveyorStatus = conveyor.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		
+		switch (conveyorStatus) {
+		case FeedbackStatusPresent:
+			conveyorEncoderConnected = true;
+			break;
+		case FeedbackStatusNotPresent:
+			break;
+		case FeedbackStatusUnknown:
+			break;
+		}
 
 	}
 
@@ -92,22 +105,22 @@ public class Conveyor extends Subsystem {
 
 	// Function to get the distance value from the encoder.
 	public double getConveyorEncoder() {
-		return conveyorEncoder.getDistance();
+		return conveyor.getPosition();
 	}
 
 	// Function to get the feed rate of the conveyor from the encoder.
-	public double getConveyorRate() {
-		return conveyorEncoder.getRate() * 60;
+	public double getConveyorSpeed() {
+		return conveyor.getSpeed();
 	}
 
 	// Function to reset the encoder on the conveyor.
 	public void resetConveyorEncoder() {
-		conveyorEncoder.reset();
+		conveyor.setPosition(0);
 	}
 
 	// Function to set and control or call the RPM of the conveyor.
 	public void setRPM(double RPM) {
-		double output = conveyorPID.calcPID(RPM, getConveyorRate(), 50);
+		double output = conveyorPID.calcPID(RPM, getConveyorSpeed(), 50);
 		conveyorMotor(RPM * kForward + bForward + output);
 	}
 
