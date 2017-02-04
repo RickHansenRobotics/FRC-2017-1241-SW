@@ -27,9 +27,9 @@ public class HopperCommand extends Command {
 		toggle.set(Robot.oi.getToolLeftBumper());
 
 		if (toggle.get()) {
-			Robot.hopper.ExtendGear();
+			Robot.hopper.ExtendHopper();
 		} else {
-			Robot.hopper.RetractGear();
+			Robot.hopper.RetractHopper();
 		}
 	}
 

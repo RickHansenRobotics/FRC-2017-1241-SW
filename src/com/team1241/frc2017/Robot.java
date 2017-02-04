@@ -1,6 +1,10 @@
 
 package com.team1241.frc2017;
 
+import java.io.IOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
 import com.team1241.frc2017.auto.NoAuto;
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
@@ -8,6 +12,7 @@ import com.team1241.frc2017.subsystems.Hanger;
 import com.team1241.frc2017.subsystems.Hopper;
 import com.team1241.frc2017.subsystems.Intake;
 import com.team1241.frc2017.subsystems.Shooter;
+import com.team1241.frc2017.utilities.UDPClient;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -45,6 +50,8 @@ public class Robot extends IterativeRobot {
 	
 	Command autonomousCommand;
 	SendableChooser autoChooser;
+	
+	UDPClient udp;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -115,6 +122,14 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		try {
+			new UDPClient().start();
+			SmartDashboard.putString("thread", "start");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			SmartDashboard.putString("thread", e.toString());
+		}
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -124,6 +139,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		updateSmartDashboard();
 	}
 
 	/**
@@ -132,16 +148,19 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
-	
+	int counter = 0;
 	public void updateSmartDashboard(){
-		rpm = pref.getDouble("RPM", 0.0);
+		/*rpm = pref.getDouble("RPM", 0.0);
 		power = pref.getDouble("Shooter Power", 0.0);
 		powerC = pref.getDouble("Conveyor Power", 0.0);
-		p = pref.getDouble("Shooter pGain", 0.0);
-		
+		p = pref.getDouble("Shooter pGain", 0.0);*/
+		counter++;
+		if(counter%50 == 0)
+			SmartDashboard.putNumber("counter", counter/50);
 		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
 		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
 		SmartDashboard.putNumber("Set RPM", rpm);
 		SmartDashboard.putNumber("Set Power", power);
+		System.out.println("TEST");
 	}
 }

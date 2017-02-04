@@ -21,14 +21,13 @@ public class Conveyor extends Subsystem {
 	// Declaring the different Victors/motors being used in the Conveyor class
 	// e.g. agitator and conveyor.
 	Victor agitator;
-	
+
 	CANTalon conveyor;
 
 	// Declaring the piston being used e.g. the claw piston.
 	DoubleSolenoid claw;
 
 	private boolean conveyorEncoderConnected = false;
-	
 
 	// Declaring the PIDcontroller for the conveyor.
 	public PIDController conveyorPID;
@@ -44,16 +43,13 @@ public class Conveyor extends Subsystem {
 
 		// Initializing the victors and connecting it to the physical motors.
 		agitator = new Victor(ElectricalConstants.AGITATOR_MOTOR);
-		
+
 		conveyor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR);
 		conveyor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 
 		// Initializing the piston and connecting it to the physical pneumatic
 		// piston.
-		claw = new DoubleSolenoid(ElectricalConstants.CLAW_PISTON_A, ElectricalConstants.CLAW_PISTON_B);
 
-		
-		
 		// Initializing the PIDController for the Conveyor.
 		conveyorPID = new PIDController(NumberConstants.pConveyor, NumberConstants.iConveyor,
 				NumberConstants.dConveyor);
@@ -64,9 +60,9 @@ public class Conveyor extends Subsystem {
 		kForward = calcline.getSlope(); // Calculating Slope
 		bForward = calcline.getIntercept(); // Calculating The Point of
 											// Intersection.
-		
+
 		FeedbackDeviceStatus conveyorStatus = conveyor.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
-		
+
 		switch (conveyorStatus) {
 		case FeedbackStatusPresent:
 			conveyorEncoderConnected = true;
@@ -94,14 +90,7 @@ public class Conveyor extends Subsystem {
 	}
 
 	// Function to control the Piston
-	public void openClaw() {
-		claw.set(DoubleSolenoid.Value.kForward);
-	}
-
-	// Function to control the Piston
-	public void closeClaw() {
-		claw.set(DoubleSolenoid.Value.kReverse);
-	}
+	
 
 	// Function to get the distance value from the encoder.
 	public double getConveyorEncoder() {

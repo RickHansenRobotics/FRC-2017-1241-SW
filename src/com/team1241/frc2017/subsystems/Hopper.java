@@ -18,8 +18,6 @@ public class Hopper extends Subsystem {
 
 		hopper = new DoubleSolenoid(ElectricalConstants.HOPPER_PISTON_A, ElectricalConstants.HOPPER_PISTON_B);
 
-		gear = new DoubleSolenoid(ElectricalConstants.GEAR_PISTON_A, ElectricalConstants.GEAR_PISTON_B);
-
 	}
 
 	public void ExtendHopper() {
@@ -28,14 +26,6 @@ public class Hopper extends Subsystem {
 
 	public void RetractHopper() {
 		hopper.set(DoubleSolenoid.Value.kReverse);
-	}
-
-	public void ExtendGear() {
-		gear.set(DoubleSolenoid.Value.kForward);
-	}
-
-	public void RetractGear() {
-		gear.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void initDefaultCommand() {

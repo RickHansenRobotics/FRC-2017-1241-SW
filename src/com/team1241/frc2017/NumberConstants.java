@@ -59,5 +59,5 @@ public class NumberConstants {
     //******************************* RPM VALUES *******************************
     //**************************************************************************
 	
-	public static final double ShotRPM									= 0.00;
+	public static final double ShotRPM									= 2000;
 }
