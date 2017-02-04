@@ -35,7 +35,7 @@ public class Shooter extends Subsystem {
 		leftMotor = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
 
 		optical = new Counter();
-		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR);
+		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR_SHOOTER);
 		optical.setUpDownCounterMode();
 		optical.setDistancePerPulse(1);
 

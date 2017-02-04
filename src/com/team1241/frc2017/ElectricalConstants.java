@@ -49,12 +49,6 @@ public class ElectricalConstants {
 	public static final int AGITATOR_MOTOR 									= 5;
 	public static final int CONVEYOR_MOTOR									= 6;
 	
-	// ***************************************************************************
-	// *************************** OPTICAL ENCODER *******************************
-	// ***************************************************************************
-	
-	public static final int OPTICAL_SENSOR                                  = 9;
-	
 	
 	// ***************************************************************************
 	// ******************************* PISTONS ***********************************
@@ -81,6 +75,13 @@ public class ElectricalConstants {
     
     public static final int CONVEYOR_ENCODER_A								= 0;
     public static final int CONVEYOR_ENCODER_B								= 1;
+    
+    // ***************************************************************************
+ 	// *********************** OPTICAL SENSOR [DIGITAL] **************************
+ 	// ***************************************************************************
+ 	
+ 	public static final int OPTICAL_SENSOR_SHOOTER                          = 2;
+ 	public static final int OPTICAL_SENSOR_HANGER                           = 3;
     
     //****************************************************************************
   	//************************ CONVEYOR ENCODER CONSTANTS ************************
