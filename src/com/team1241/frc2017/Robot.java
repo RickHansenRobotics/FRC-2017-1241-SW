@@ -161,6 +161,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
 		SmartDashboard.putNumber("Set RPM", rpm);
 		SmartDashboard.putNumber("Set Power", power);
-		System.out.println("TEST");
+		
 	}
 }
