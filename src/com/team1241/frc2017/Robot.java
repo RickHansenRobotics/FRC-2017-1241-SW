@@ -152,8 +152,8 @@ public class Robot extends IterativeRobot {
 	int counter = 0;
 
 	public void updateSmartDashboard() {
-		rpm = pref.getDouble("RPM", 0.0);
-		power = pref.getDouble("Shooter Power", 0.0);
+//		rpm = pref.getDouble("RPM", 0.0);
+//		power = pref.getDouble("Shooter Power", 0.0);
 		// powerC = pref.getDouble("Conveyor Power", 0.0);
 		// p = pref.getDouble("Shooter pGain", 0.0);
 		counter++;
@@ -163,6 +163,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
 		SmartDashboard.putNumber("Set RPM", rpm);
 		SmartDashboard.putNumber("Set Power", power);
+//		SmartDashboard.putNumber("Left Motor Current Draw", intake.getLeftMotorDraw());
+//		SmartDashboard.putNumber("Right Motor Current Draw", intake.getRightMotorDraw());
 
 	}
 }

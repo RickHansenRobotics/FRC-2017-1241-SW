@@ -4,8 +4,10 @@ import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.commands.IntakeCommand;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.hal.PDPJNI;
 
 /**
  * @author Kaveesha Siribaddana
@@ -17,6 +19,8 @@ public class Intake extends Subsystem {
 	Spark sideIntakeRollers;
 
 	DoubleSolenoid intakePiston;
+
+	PowerDistributionPanel pdp;
 
 	public Intake() {
 
@@ -32,7 +36,7 @@ public class Intake extends Subsystem {
 	public void setIntakeSpeed(double speed) {
 		mainIntakeRollers.set(speed);
 		sideIntakeRollers.set(speed);
-	}	
+	}
 
 	// INTAKE PISTON COMMANDS
 
@@ -47,4 +51,12 @@ public class Intake extends Subsystem {
 	public void initDefaultCommand() {
 		setDefaultCommand(new IntakeCommand());
 	}
+
+//	public double getLeftMotorDraw() {
+//		return pdp.getCurrent(ElectricalConstants.AGITATOR_MOTOR);
+//	}
+//
+//	public double getRightMotorDraw() {
+//		return pdp.getCurrent(ElectricalConstants.CONVEYOR_MOTOR);
+//	}
 }
