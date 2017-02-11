@@ -26,11 +26,13 @@ public class ShooterCommand extends Command {
 	protected void execute() {
 
 		if (Robot.oi.getToolLeftBumper()) {
-			rpm.start();
-			Robot.shooter.openClaw();
+			//rpm.start();
+			Robot.shooter.setShooter(0.6);
+			//Robot.shooter.openClaw();
 		} else {
-			rpm.cancel();
-			Robot.shooter.closeClaw();
+			//rpm.cancel();
+			Robot.shooter.setShooter(0);
+			//Robot.shooter.closeClaw();
 		}
 	}
 

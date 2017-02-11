@@ -9,6 +9,7 @@ import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,11 +18,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-	CANTalon rightMotor;
-	CANTalon leftMotor;
+	Talon rightMotor;
+	Talon leftMotor;
 
 	Counter optical;
-	
+
 	DoubleSolenoid claw;
 
 	public PIDController shooterPID;
@@ -34,14 +35,14 @@ public class Shooter extends Subsystem {
 	private double bForward;
 
 	public Shooter() {
-		rightMotor = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
-		leftMotor = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
+		rightMotor = new Talon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		leftMotor = new Talon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
 
 		optical = new Counter();
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR_SHOOTER);
 		optical.setUpDownCounterMode();
 		optical.setDistancePerPulse(1);
-		
+
 		claw = new DoubleSolenoid(ElectricalConstants.CLAW_PISTON_A, ElectricalConstants.CLAW_PISTON_B);
 
 		shooterPID = new PIDController(NumberConstants.pShooter, NumberConstants.iShooter, NumberConstants.dShooter);
@@ -74,8 +75,8 @@ public class Shooter extends Subsystem {
 	}
 
 	public void setShooter(double input) {
-		rightMotor.set(input);
-		leftMotor.set(-input);
+		rightMotor.set(-input);
+		leftMotor.set(input);
 	}
 
 	public int getOptic() {
@@ -85,7 +86,7 @@ public class Shooter extends Subsystem {
 	public double getRPM() {
 		return optical.getRate() * 60;
 	}
-	
+
 	public void openClaw() {
 		claw.set(DoubleSolenoid.Value.kForward);
 	}

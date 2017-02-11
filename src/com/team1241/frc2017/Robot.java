@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -41,16 +40,16 @@ public class Robot extends IterativeRobot {
 	public static Conveyor conveyor;
 	public static Hopper hopper;
 	public static Hanger hanger;
-	
+
 	Preferences pref;
 	public static double rpm;
 	public static double power;
 	public static double powerC;
 	public static double p;
-	
+
 	Command autonomousCommand;
 	SendableChooser autoChooser;
-	
+
 	UDPClient udp;
 
 	/**
@@ -58,14 +57,15 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		
+
 		oi = new OI();
 		drive = new Drivetrain();
 		intake = new Intake();
 		shooter = new Shooter();
 		hopper = new Hopper();
 		hanger = new Hanger();
-		
+		conveyor = new Conveyor();
+
 		autoChooser = new SendableChooser();
 
 		autoChooser.addDefault("No Auton", new NoAuto());
@@ -148,19 +148,21 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+
 	int counter = 0;
-	public void updateSmartDashboard(){
-		/*rpm = pref.getDouble("RPM", 0.0);
+
+	public void updateSmartDashboard() {
+		rpm = pref.getDouble("RPM", 0.0);
 		power = pref.getDouble("Shooter Power", 0.0);
-		powerC = pref.getDouble("Conveyor Power", 0.0);
-		p = pref.getDouble("Shooter pGain", 0.0);*/
+		// powerC = pref.getDouble("Conveyor Power", 0.0);
+		// p = pref.getDouble("Shooter pGain", 0.0);
 		counter++;
-		if(counter%50 == 0)
-			SmartDashboard.putNumber("counter", counter/50);
+		if (counter % 50 == 0)
+			SmartDashboard.putNumber("counter", counter / 50);
 		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
 		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
 		SmartDashboard.putNumber("Set RPM", rpm);
 		SmartDashboard.putNumber("Set Power", power);
-		
+
 	}
 }

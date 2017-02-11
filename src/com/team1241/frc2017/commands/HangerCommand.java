@@ -24,9 +24,9 @@ public class HangerCommand extends Command {
 
 		Robot.hanger.hangMotor(Robot.oi.getToolRightY());
 
-		if (Robot.oi.getToolAButton()) {
+		if (Robot.oi.getToolRightBumper()) {
 			Robot.hanger.extendHangPiston();
-		} else if (Robot.oi.getToolBButton()) {
+		} else if (Robot.oi.getToolRightTrigger()) {
 			Robot.hanger.retractHangPiston();
 		}
 

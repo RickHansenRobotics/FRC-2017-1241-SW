@@ -11,6 +11,7 @@ import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,9 +21,9 @@ public class Conveyor extends Subsystem {
 
 	// Declaring the different Victors/motors being used in the Conveyor class
 	// e.g. agitator and conveyor.
-	Victor agitator;
+	VictorSP agitator;
 
-	CANTalon conveyor;
+	VictorSP conveyor;
 
 	// Declaring the piston being used e.g. the claw piston.
 	DoubleSolenoid claw;
@@ -42,10 +43,10 @@ public class Conveyor extends Subsystem {
 	public Conveyor() {
 
 		// Initializing the victors and connecting it to the physical motors.
-		agitator = new Victor(ElectricalConstants.AGITATOR_MOTOR);
+		agitator = new VictorSP(ElectricalConstants.AGITATOR_MOTOR);
 
-		conveyor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR);
-		conveyor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		conveyor = new VictorSP(ElectricalConstants.CONVEYOR_MOTOR);
+		
 
 		// Initializing the piston and connecting it to the physical pneumatic
 		// piston.
@@ -61,7 +62,7 @@ public class Conveyor extends Subsystem {
 		bForward = calcline.getIntercept(); // Calculating The Point of
 											// Intersection.
 
-		FeedbackDeviceStatus conveyorStatus = conveyor.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		/*FeedbackDeviceStatus conveyorStatus = conveyor.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
 
 		switch (conveyorStatus) {
 		case FeedbackStatusPresent:
@@ -71,7 +72,7 @@ public class Conveyor extends Subsystem {
 			break;
 		case FeedbackStatusUnknown:
 			break;
-		}
+		}*/
 
 	}
 
