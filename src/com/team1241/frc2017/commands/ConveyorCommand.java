@@ -20,20 +20,28 @@ public class ConveyorCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
-		if (Robot.oi.getToolAButton()) {
-			Robot.conveyor.conveyorMotor(1);
-			Robot.conveyor.agitatorMotor(1);
-		} else if (Robot.oi.getToolXButton()) {
-			Robot.conveyor.conveyorMotor(-1);
-			Robot.conveyor.agitatorMotor(-1);
-		} else if (Robot.oi.getToolBButton()) {
-			Robot.conveyor.conveyorMotor(0.5);
-			Robot.conveyor.agitatorMotor(0.5);
-		} else if (Robot.oi.getToolYButton()) {
-			Robot.conveyor.conveyorMotor(-0.5);
-			Robot.conveyor.agitatorMotor(-0.5);
+//		if (Robot.oi.getToolAButton()) {
+//			Robot.conveyor.conveyorMotor(Robot.powerC);
+//			Robot.conveyor.agitatorMotor(Robot.powerC);
+//		} else if (Robot.oi.getToolXButton()) {
+//			Robot.conveyor.conveyorMotor(-Robot.powerC);
+//			Robot.conveyor.agitatorMotor(-Robot.powerC);
+//		} else if (Robot.oi.getToolBButton()) {
+//			Robot.conveyor.conveyorMotor(Robot.powerC);
+//			Robot.conveyor.agitatorMotor(Robot.powerC);
+//		} else if (Robot.oi.getToolYButton()) {
+//			Robot.conveyor.conveyorMotor(-Robot.powerC);
+//			Robot.conveyor.agitatorMotor(-Robot.powerC);
+//		} else {
+//			Robot.conveyor.conveyorMotor(0);
+//			Robot.conveyor.agitatorMotor(0);
+//		}
+		
+		if(Robot.oi.getToolAButton()){
+			Robot.conveyor.agitatorMotor(0.7);
+		} else if (Robot.oi.getToolBButton()){
+			Robot.conveyor.agitatorMotor(-0.7);
 		} else {
-			Robot.conveyor.conveyorMotor(0);
 			Robot.conveyor.agitatorMotor(0);
 		}
 

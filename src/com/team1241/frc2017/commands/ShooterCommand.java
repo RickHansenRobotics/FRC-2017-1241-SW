@@ -27,7 +27,7 @@ public class ShooterCommand extends Command {
 
 		if (Robot.oi.getToolLeftBumper()) {
 			//rpm.start();
-			Robot.shooter.setShooter(0.6);
+			Robot.shooter.setShooter(-Robot.power);
 			//Robot.shooter.openClaw();
 		} else {
 			//rpm.cancel();

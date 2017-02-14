@@ -1,8 +1,6 @@
 package com.team1241.frc2017.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.FeedbackDeviceStatus;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.ConveyorCommand;
@@ -10,7 +8,6 @@ import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,9 +18,9 @@ public class Conveyor extends Subsystem {
 
 	// Declaring the different Victors/motors being used in the Conveyor class
 	// e.g. agitator and conveyor.
-	VictorSP agitator;
+	CANTalon agitator;
 
-	VictorSP conveyor;
+	CANTalon conveyor;
 
 	// Declaring the piston being used e.g. the claw piston.
 	DoubleSolenoid claw;
@@ -43,9 +40,9 @@ public class Conveyor extends Subsystem {
 	public Conveyor() {
 
 		// Initializing the victors and connecting it to the physical motors.
-		agitator = new VictorSP(ElectricalConstants.AGITATOR_MOTOR);
+		agitator = new CANTalon(ElectricalConstants.AGITATOR_MOTOR);
 
-		conveyor = new VictorSP(ElectricalConstants.CONVEYOR_MOTOR);
+		conveyor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR);
 		
 
 		// Initializing the piston and connecting it to the physical pneumatic

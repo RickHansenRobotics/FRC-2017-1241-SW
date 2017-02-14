@@ -24,11 +24,15 @@ public class IntakeCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
+		Robot.intake.setIntakeSpeed(Robot.oi.getToolLeftY());
+		
+		
+
 //		if (Robot.oi.getToolXButton()) {
 //			Robot.intake.setIntakeSpeed(1);
 //		} else if (Robot.oi.getToolAButton()) {
 //			Robot.intake.setIntakeSpeed(-1);
-//		}else{
+//		} else {
 //			Robot.intake.setIntakeSpeed(0);
 //		}
 //

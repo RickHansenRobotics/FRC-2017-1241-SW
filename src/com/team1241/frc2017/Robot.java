@@ -130,6 +130,7 @@ public class Robot extends IterativeRobot {
 			e.printStackTrace();
 			SmartDashboard.putString("thread", e.toString());
 		}
+		pref = Preferences.getInstance();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -153,9 +154,9 @@ public class Robot extends IterativeRobot {
 
 	public void updateSmartDashboard() {
 //		rpm = pref.getDouble("RPM", 0.0);
-//		power = pref.getDouble("Shooter Power", 0.0);
-		// powerC = pref.getDouble("Conveyor Power", 0.0);
-		// p = pref.getDouble("Shooter pGain", 0.0);
+		power = pref.getDouble("Shooter Power", 0.0);
+		powerC = pref.getDouble("Conveyor Power", 0.0);
+		p = pref.getDouble("Shooter pGain", 0.0);
 		counter++;
 		if (counter % 50 == 0)
 			SmartDashboard.putNumber("counter", counter / 50);

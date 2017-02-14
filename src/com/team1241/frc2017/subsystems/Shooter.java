@@ -1,6 +1,5 @@
 package com.team1241.frc2017.subsystems;
 
-import com.ctre.CANTalon;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.ShooterCommand;
@@ -76,7 +75,7 @@ public class Shooter extends Subsystem {
 
 	public void setShooter(double input) {
 		rightMotor.set(-input);
-		leftMotor.set(input);
+		leftMotor.set(-input);
 	}
 
 	public int getOptic() {
