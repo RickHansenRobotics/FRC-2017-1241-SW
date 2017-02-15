@@ -33,7 +33,7 @@ public class SetRPM extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return !Robot.shooter.getShooterState();
+    	return false;
     }
 
     // Called once after isFinished returns true
