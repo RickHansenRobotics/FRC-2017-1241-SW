@@ -161,8 +161,7 @@ public class Robot extends IterativeRobot {
 		if (counter % 50 == 0)
 			SmartDashboard.putNumber("counter", counter / 50);
 		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
-		SmartDashboard.putNumber("Shooter RPM", Math.round(shooter.getRPM()));
-		SmartDashboard.putNumber("Shooter Slope", rpm);
+		SmartDashboard.putNumber("Shooter RPM", Math.round(shooter.getRPM(rpm)));
 		SmartDashboard.putNumber("Set RPM", rpm);
 		SmartDashboard.putNumber("Set Power", power);
 //		SmartDashboard.putNumber("Left Motor Current Draw", intake.getLeftMotorDraw());

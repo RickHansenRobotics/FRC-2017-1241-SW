@@ -33,8 +33,6 @@ public class Shooter extends Subsystem {
 	private double kForward;
 	private double bForward;
 
-	int counter = 1;
-	double avg = 0;
 	double prev = 0;
 
 	public Shooter() {
@@ -72,7 +70,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void setRPM(double rpm) {
-		double output = shooterPID.calcPID(rpm, getRPM(), 50);
+		double output = shooterPID.calcPID(rpm, getRPM(rpm), 50);
 
 		setShooter(rpm * kForward + bForward + output);
 	}
@@ -86,14 +84,15 @@ public class Shooter extends Subsystem {
 		return optical.get();
 	}
 
-	public double getRPM() {
-		if (optical.getRate() * 60 > (prev + 1000) && optical.getRate() * 60 > 2000) {
-			// avg = avg + (optical.getRate() * 60 - avg)/counter;
-			// counter++;
+	public double getRPM(double setRPM) {
+		// If rpm is greater than the previous by at most 1000 AND the rpm is greater
+		// than the setRPM, then return the previous rpm
+		// Else return the current rpm
+		if (optical.getRate()*60 > (prev + 1000) && optical.getRate()*60 > (setRPM)) {
 			return prev;
 		} else {
 			prev = optical.getRate() * 60;
-			return optical.getRate() * 60;// optical.getRate() * 60;
+			return prev;
 		}
 	}
 
