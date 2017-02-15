@@ -33,7 +33,7 @@ public class NumberConstants {
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	public static final double pShooter 								= 0.00;
+	public static final double pShooter 								= 0.000;
 	public static final double iShooter 								= 0.00;
 	public static final double dShooter 								= 0.00;
 
@@ -52,8 +52,8 @@ public class NumberConstants {
 	public static final int[] RPMS_CONVEYOR = new int[] {4000, 4100, 4250, 4500, 5000};
 	public static final double[] POWERS_CONVEYOR = new double[] { 0.6, 0.7, 0.8, 0.9, 1.0};
 	
-	public static final int[] RPMS_SHOOTER = new int[] { 4000, 4300, 4600, 5000, 5500 };
-	public static final double[] POWERS_SHOOTER = new double[] { 0.72, 0.77, 0.83, 0.91, 0.97 };
+	public static final int[] RPMS_SHOOTER = new int[] { 2760, 3040, 3410, 3680, 4000 };
+	public static final double[] POWERS_SHOOTER = new double[] { 0.45, 0.48, 0.55, 0.60, 0.65 };
 	
 	//**************************************************************************
     //******************************* RPM VALUES *******************************

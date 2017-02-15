@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  * 
- * @author Kaveesha Siribaddana
+ * @author Team 1241: Theory6
  */
 public class Robot extends IterativeRobot {
 
@@ -153,7 +153,7 @@ public class Robot extends IterativeRobot {
 	int counter = 0;
 
 	public void updateSmartDashboard() {
-//		rpm = pref.getDouble("RPM", 0.0);
+		rpm = pref.getDouble("RPM", 0.0);
 		power = pref.getDouble("Shooter Power", 0.0);
 		powerC = pref.getDouble("Conveyor Power", 0.0);
 		p = pref.getDouble("Shooter pGain", 0.0);
@@ -161,7 +161,8 @@ public class Robot extends IterativeRobot {
 		if (counter % 50 == 0)
 			SmartDashboard.putNumber("counter", counter / 50);
 		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
-		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+		SmartDashboard.putNumber("Shooter RPM", Math.round(shooter.getRPM()));
+		SmartDashboard.putNumber("Shooter Slope", rpm);
 		SmartDashboard.putNumber("Set RPM", rpm);
 		SmartDashboard.putNumber("Set Power", power);
 //		SmartDashboard.putNumber("Left Motor Current Draw", intake.getLeftMotorDraw());

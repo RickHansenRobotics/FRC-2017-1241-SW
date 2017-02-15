@@ -21,14 +21,9 @@ public class HangerCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		
-		
-		Robot.hanger.hangMotor(Robot.oi.getToolRightY());
-		
-		if Robot.oi.getToolAButton()){
-			
-		}
-		
+
+		//Robot.hanger.hangMotor(Robot.oi.getToolRightY());
+
 		if (Robot.oi.getToolRightBumper()) {
 			Robot.hanger.extendHangPiston();
 		} else if (Robot.oi.getToolRightTrigger()) {

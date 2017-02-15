@@ -19,19 +19,18 @@ public class ShooterCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		rpm = new SetRPM(NumberConstants.ShotRPM);
+		rpm = new SetRPM(Robot.rpm);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
 		if (Robot.oi.getToolLeftBumper()) {
-			//rpm.start();
-			Robot.shooter.setShooter(-Robot.power);
+			rpm.start();
+			//Robot.shooter.setShooter(-Robot.power);
 			//Robot.shooter.openClaw();
 		} else {
-			//rpm.cancel();
-			Robot.shooter.setShooter(0);
+			rpm.cancel();
+			//Robot.shooter.setShooter(0);
 			//Robot.shooter.closeClaw();
 		}
 	}

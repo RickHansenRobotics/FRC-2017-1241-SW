@@ -70,7 +70,7 @@ public class ElectricalConstants {
  	// *********************** OPTICAL SENSOR [DIGITAL] **************************
  	// ***************************************************************************
  	
- 	public static final int OPTICAL_SENSOR_SHOOTER                          = 2;
+ 	public static final int OPTICAL_SENSOR_SHOOTER                          = 6;
  	public static final int OPTICAL_SENSOR_HANGER                           = 3;
     
     //****************************************************************************

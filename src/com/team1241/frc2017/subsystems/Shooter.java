@@ -33,6 +33,10 @@ public class Shooter extends Subsystem {
 	private double kForward;
 	private double bForward;
 
+	int counter = 1;
+	double avg = 0;
+	double prev = 0;
+
 	public Shooter() {
 		rightMotor = new Talon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
 		leftMotor = new Talon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
@@ -48,7 +52,7 @@ public class Shooter extends Subsystem {
 
 		shooterState = false;
 
-		calcLine.setValues(NumberConstants.RPMS_SHOOTER, NumberConstants.RPMS_SHOOTER);
+		calcLine.setValues(NumberConstants.RPMS_SHOOTER, NumberConstants.POWERS_SHOOTER);
 		kForward = calcLine.getSlope();
 		bForward = calcLine.getIntercept();
 	}
@@ -74,8 +78,8 @@ public class Shooter extends Subsystem {
 	}
 
 	public void setShooter(double input) {
-		rightMotor.set(-input);
-		leftMotor.set(-input);
+		rightMotor.set(input);
+		leftMotor.set(input);
 	}
 
 	public int getOptic() {
@@ -83,7 +87,14 @@ public class Shooter extends Subsystem {
 	}
 
 	public double getRPM() {
-		return optical.getRate() * 60;
+		if (optical.getRate() * 60 > (prev + 1000) && optical.getRate() * 60 > 2000) {
+			// avg = avg + (optical.getRate() * 60 - avg)/counter;
+			// counter++;
+			return prev;
+		} else {
+			prev = optical.getRate() * 60;
+			return optical.getRate() * 60;// optical.getRate() * 60;
+		}
 	}
 
 	public void openClaw() {
@@ -93,6 +104,14 @@ public class Shooter extends Subsystem {
 	// Function to control the Piston
 	public void closeClaw() {
 		claw.set(DoubleSolenoid.Value.kReverse);
+	}
+
+	public double getSlope() {
+		return kForward;
+	}
+
+	public double getIntercept() {
+		return bForward;
 	}
 
 	// SHOOTER PID

@@ -37,10 +37,18 @@ public class ConveyorCommand extends Command {
 //			Robot.conveyor.agitatorMotor(0);
 //		}
 		
+		if(Robot.oi.getToolXButton()){
+			Robot.hanger.hangMotor(0.8);
+		} else if(Robot.oi.getToolAButton()){
+			Robot.hanger.hangMotor(-0.8);
+		} else{
+			Robot.hanger.hangMotor(0);
+		}
+		
 		if(Robot.oi.getToolAButton()){
-			Robot.conveyor.agitatorMotor(0.7);
-		} else if (Robot.oi.getToolBButton()){
 			Robot.conveyor.agitatorMotor(-0.7);
+		} else if (Robot.oi.getToolXButton()){
+			Robot.conveyor.agitatorMotor(0.7);
 		} else {
 			Robot.conveyor.agitatorMotor(0);
 		}
