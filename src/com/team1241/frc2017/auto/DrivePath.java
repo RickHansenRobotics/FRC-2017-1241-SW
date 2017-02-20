@@ -5,6 +5,7 @@ import com.team1241.frc2017.utilities.BezierCurve;
 import com.team1241.frc2017.utilities.Point;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command used to allow robot to travel a path generated using Bezier curves
@@ -88,8 +89,8 @@ public class DrivePath extends Command {
 		if (reverse) {
 			if (-Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter <= curve.size())
 				counter++;
-
 			Robot.drive.driveSetpoint(-distance, speed, curve.findAngle(counter), 1);
+			SmartDashboard.putNumber("Bezier Angle", curve.findAngle(counter));
 		} else {
 			if (Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < curve.size())
 				counter++;

@@ -28,6 +28,7 @@ public class SetRPM extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.shooter.changeGains(Robot.p, Robot.i, Robot.d);
     	Robot.shooter.setRPM(rpm);
     }
 

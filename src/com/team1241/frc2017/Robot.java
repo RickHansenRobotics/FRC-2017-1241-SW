@@ -2,10 +2,14 @@
 package com.team1241.frc2017;
 
 import java.io.IOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
+import com.team1241.frc2017.auto.CenterGearCommand;
+import com.team1241.frc2017.auto.DriveCommand;
+import com.team1241.frc2017.auto.LeftGearCommandBlue;
 import com.team1241.frc2017.auto.NoAuto;
+import com.team1241.frc2017.auto.RightGearCommandRed;
+import com.team1241.frc2017.auto.RightGearShootCommandRed;
+import com.team1241.frc2017.auto.TurnCommand;
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
 import com.team1241.frc2017.subsystems.Hanger;
@@ -46,6 +50,8 @@ public class Robot extends IterativeRobot {
 	public static double power;
 	public static double powerC;
 	public static double p;
+	public static double i;
+	public static double d;
 
 	Command autonomousCommand;
 	SendableChooser autoChooser;
@@ -57,7 +63,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-
+		pref = Preferences.getInstance();
 		oi = new OI();
 		drive = new Drivetrain();
 		intake = new Intake();
@@ -69,6 +75,14 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 
 		autoChooser.addDefault("No Auton", new NoAuto());
+		//autoChooser.addObject("Drive Straight", new ProfiledPath(DriveStraightProfile.Points, DriveStraightProfile.kNumPoints));
+		autoChooser.addObject("Drive Straight", new DriveCommand(72,0.8,0,5));
+		autoChooser.addObject("Turn Command", new TurnCommand(90,0.8,5,1));
+		autoChooser.addObject("Left Gear Command Blue", new LeftGearCommandBlue());
+		autoChooser.addObject("Right Gear Command Red", new RightGearCommandRed());
+		autoChooser.addObject("Center Gear Command", new CenterGearCommand());
+	
+		SmartDashboard.putData("Auto Mode", autoChooser);
 	}
 
 	/**
@@ -82,6 +96,7 @@ public class Robot extends IterativeRobot {
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		updateSmartDashboard();
 	}
 
 	/**
@@ -96,7 +111,8 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		autonomousCommand = (Command) autoChooser.getSelected();
+		//autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand = new RightGearShootCommandRed();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -104,6 +120,8 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
+		drive.resetEncoders();
+		drive.resetGyro();
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
@@ -115,21 +133,27 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		updateSmartDashboard();
 	}
 
 	public void teleopInit() {
+		rpm = pref.getDouble("RPM", 0.0);
+		power = pref.getDouble("Shooter Power", 0.0);
+		powerC = pref.getDouble("Conveyor Power", 0.0);
+		p = pref.getDouble("Shooter pGain", 0.0);
+		drive.resetGyro();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		try {
+		/*try {
 			new UDPClient().start();
 			SmartDashboard.putString("thread", "start");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			SmartDashboard.putString("thread", e.toString());
-		}
+		}*/
 		pref = Preferences.getInstance();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -157,13 +181,19 @@ public class Robot extends IterativeRobot {
 		power = pref.getDouble("Shooter Power", 0.0);
 		powerC = pref.getDouble("Conveyor Power", 0.0);
 		p = pref.getDouble("Shooter pGain", 0.0);
+		i = pref.getDouble("Shooter iGain", 0.0);
+		d = pref.getDouble("Shooter dGain", 0.0);
 		counter++;
-		if (counter % 50 == 0)
+		if (counter % 50 == 0){
 			SmartDashboard.putNumber("counter", counter / 50);
+		}
 		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
 		SmartDashboard.putNumber("Shooter RPM", Math.round(shooter.getRPM(rpm)));
 		SmartDashboard.putNumber("Set RPM", rpm);
 		SmartDashboard.putNumber("Set Power", power);
+		SmartDashboard.putNumber("Gyro Angle", drive.getYaw());
+		SmartDashboard.putNumber("Right Encoder", drive.getRightDriveEncoder());
+		SmartDashboard.putNumber("Left Encoder", drive.getLeftDriveEncoder());
 //		SmartDashboard.putNumber("Left Motor Current Draw", intake.getLeftMotorDraw());
 //		SmartDashboard.putNumber("Right Motor Current Draw", intake.getRightMotorDraw());
 

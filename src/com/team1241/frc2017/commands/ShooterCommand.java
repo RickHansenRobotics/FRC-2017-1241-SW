@@ -4,6 +4,7 @@ import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Kaveesha Siribaddana
@@ -26,7 +27,7 @@ public class ShooterCommand extends Command {
 	protected void execute() {
 		if (Robot.oi.getToolLeftBumper()) {
 			rpm.start();
-			//Robot.shooter.setShooter(-Robot.power);
+			//Robot.shooter.setShooter(Robot.power);
 			//Robot.shooter.openClaw();
 		} else {
 			rpm.cancel();

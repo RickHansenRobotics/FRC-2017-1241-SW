@@ -15,9 +15,9 @@ public class NumberConstants {
     //*************************** PID VALUES (DRIVE) ***************************
     //**************************************************************************
 	
-	public static final double pDrive 									 = 0.00;
+	public static final double pDrive 									 = 0.02;
 	public static final double iDrive 									 = 0.00;
-	public static final double dDrive 									 = 0.00;
+	public static final double dDrive 									 = 0.1;
 	
 	public static final double Drive_Scale 								 = 0.00;
 	
@@ -25,15 +25,16 @@ public class NumberConstants {
     //**************************** PID VALUES (GYRO) ***************************
     //**************************************************************************
 	
-	public static final double pGyro 									 = 0.00;
+	public static final double pGyro 									 = 0.012;
 	public static final double iGyro 									 = 0.00;
-	public static final double dGyro 									 = 0.00;
+	public static final double dGyro 									 = 0.058
+			;
 	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	public static final double pShooter 								= 0.000;
+	public static final double pShooter 								= 0.00;
 	public static final double iShooter 								= 0.00;
 	public static final double dShooter 								= 0.00;
 
@@ -52,8 +53,8 @@ public class NumberConstants {
 	public static final int[] RPMS_CONVEYOR = new int[] {4000, 4100, 4250, 4500, 5000};
 	public static final double[] POWERS_CONVEYOR = new double[] { 0.6, 0.7, 0.8, 0.9, 1.0};
 	
-	public static final int[] RPMS_SHOOTER = new int[] { 2760, 3040, 3410, 3680, 4000 };
-	public static final double[] POWERS_SHOOTER = new double[] { 0.45, 0.48, 0.55, 0.60, 0.65 };
+	public static final int[] RPMS_SHOOTER = new int[] { 2800, 3100, 3400, 3800, 4000 };
+	public static final double[] POWERS_SHOOTER = new double[] { 0.48, 0.53, 0.59, 0.68, 0.72 };
 	
 	//**************************************************************************
     //******************************* RPM VALUES *******************************

@@ -13,6 +13,7 @@ import com.team1241.frc2017.utilities.Nav6;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -72,7 +73,7 @@ public class Drivetrain extends Subsystem {
 		// Initialize Talons
 		leftMaster = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
 		leftMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		leftMaster.reverseSensor(false);
+		leftMaster.reverseSensor(true);
 
 		leftSlave = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		leftSlave.changeControlMode(TalonControlMode.Follower);
@@ -83,8 +84,8 @@ public class Drivetrain extends Subsystem {
 		rightMaster.reverseSensor(false);
 
 		rightSlave = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
-		rightSlave.changeControlMode(TalonControlMode.Follower);
-		rightSlave.set(ElectricalConstants.RIGHT_DRIVE_FRONT);
+		//rightSlave.changeControlMode(TalonControlMode.Follower);
+		//rightSlave.set(ElectricalConstants.RIGHT_DRIVE_FRONT);
 
 		FeedbackDeviceStatus leftStatus = leftMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
 		FeedbackDeviceStatus rightStatus = rightMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
@@ -114,12 +115,15 @@ public class Drivetrain extends Subsystem {
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
 		
 		rightMaster.setProfile(0);
-		rightMaster.setPID(0, 0, 0);
-		rightMaster.setF(0);
+		rightMaster.setPID(0.01, 0, 0);
+		rightMaster.setF(0.2670508);
 		
 		leftMaster.setProfile(0);
-		leftMaster.setPID(0, 0, 0);
-		leftMaster.setF(0);
+		leftMaster.setPID(0.01, 0, 0);
+		leftMaster.setF(0.2670508);
+		
+		resetEncoders();
+		resetGyro();
 	}
 
 	public void initDefaultCommand() {
@@ -132,6 +136,7 @@ public class Drivetrain extends Subsystem {
 
 	public void runRightDrive(double input) {
 		rightMaster.set(input);
+		rightSlave.set(input);
 	}
 	
 	public CANTalon getRightMaster(){
@@ -153,18 +158,18 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void driveSetpoint(double setPoint, double speed, double setAngle, double tolerance) {
-		double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), tolerance);
+		double output = drivePID.calcPID(setPoint, getAverageDistance(), tolerance);
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
-
-		runLeftDrive((output + angle) * speed);
-		runRightDrive((-output + angle) * speed);
+		SmartDashboard.putNumber("PID OUTPUT", angle);
+		runLeftDrive((-output - angle) * speed);
+		runRightDrive((output - angle) * speed);
 	}
 
 	public void turnDrive(double setAngle, double speed, double tolerance) {
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 
-		runLeftDrive(angle * speed);
-		runRightDrive(angle * speed);
+		runLeftDrive(-angle * speed);
+		runRightDrive(-angle * speed);
 	}
 	
 	public void driveAngle(double setAngle, double speed) {

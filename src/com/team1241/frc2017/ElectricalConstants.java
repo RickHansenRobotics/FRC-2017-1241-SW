@@ -54,17 +54,17 @@ public class ElectricalConstants {
 	// ******************************* PISTONS ***********************************
 	// ***************************************************************************
 	
-    public static final int CLAW_PISTON_A 									= 0;
-    public static final int CLAW_PISTON_B  									= 1;
+    public static final int CLAW_PISTON_A 									= 2;
+    public static final int CLAW_PISTON_B  									= 5;
     
-    public static final int INTAKE_PISTON_A									= 2;
-    public static final int INTAKE_PISTON_B									= 3;
+    public static final int INTAKE_PISTON_A									= 0;
+    public static final int INTAKE_PISTON_B									= 7;
     
-    public static final int HOPPER_PISTON_A                                 = 4;
-    public static final int HOPPER_PISTON_B 								= 5;
+    public static final int HOPPER_PISTON_A                                 = 1;
+    public static final int HOPPER_PISTON_B 								= 6;
     
-    public static final int HANG_PISTON_A									= 6;
-    public static final int HANG_PISTON_B									= 7;
+    public static final int HANG_PISTON_A									= 3;
+    public static final int HANG_PISTON_B									= 4;
     
     // ***************************************************************************
  	// *********************** OPTICAL SENSOR [DIGITAL] **************************
@@ -88,6 +88,6 @@ public class ElectricalConstants {
     //**************************************************************************
 	private static final double encoderGearRatio 					     = 42/36;
 	private static final double wheelRadius								 = 2;
-	public static final double ROTATIONS_TO_INCHES 		= 2*Math.PI*wheelRadius*encoderGearRatio;
+	public static final double ROTATIONS_TO_INCHES 		= 15.55;//2*Math.PI*wheelRadius*encoderGearRatio;
 
 }

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class BezierCurve {
 
 	/** Used to save number of points generated */
-	private static int size = 1000;
+	private static int size = 200;
 
 	/** Used to store inputed coordinates */
 	public Point[] vector = new Point[4];
@@ -129,7 +129,7 @@ public class BezierCurve {
 		xPoints.clear();
 		yPoints.clear();
 
-		for (double x = 0; x <= 1; x += 1 / size) {
+		for (double x = 0; x <= 1; x += 0.005) {
 			xVal = useFunctionX(xValues[0], xValues[1], xValues[2], xValues[3], x);
 			yVal = useFunctionY(yValues[0], yValues[1], yValues[2], yValues[3], x);
 			xPoints.add(xVal);

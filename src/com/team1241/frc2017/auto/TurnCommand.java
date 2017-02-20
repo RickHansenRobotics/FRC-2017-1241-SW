@@ -47,7 +47,7 @@ public class TurnCommand extends Command {
 
 	// Command is finished when timed out
 	protected boolean isFinished() {
-		return Robot.drive.gyroPIDDone() || isTimedOut();
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns true, once done will stop robot from

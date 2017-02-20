@@ -88,7 +88,7 @@ public class Shooter extends Subsystem {
 		// If rpm is greater than the previous by at most 1000 AND the rpm is greater
 		// than the setRPM, then return the previous rpm
 		// Else return the current rpm
-		if (optical.getRate()*60 > (prev + 1000) && optical.getRate()*60 > (setRPM)) {
+		if (optical.getRate()*60 > (prev + 1000) && optical.getRate()*60 > (setRPM+500)) {
 			return prev;
 		} else {
 			prev = optical.getRate() * 60;
@@ -117,5 +117,9 @@ public class Shooter extends Subsystem {
 
 	public void resetPID() {
 		shooterPID.resetPID();
+	}
+	
+	public void changeGains(double p, double i, double d){
+		shooterPID.changePIDGains(p, i, d);
 	}
 }
