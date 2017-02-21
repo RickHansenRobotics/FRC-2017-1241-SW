@@ -8,7 +8,7 @@ import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -18,9 +18,11 @@ public class Conveyor extends Subsystem {
 
 	// Declaring the different Victors/motors being used in the Conveyor class
 	// e.g. agitator and conveyor.
-	CANTalon agitator;
+	CANTalon agitatorFeeder;
+	CANTalon agitatorHopper;
 
-	CANTalon conveyor;
+	Talon conveyor1;
+	Talon conveyor2;
 
 	// Declaring the piston being used e.g. the claw piston.
 	DoubleSolenoid claw;
@@ -40,10 +42,11 @@ public class Conveyor extends Subsystem {
 	public Conveyor() {
 
 		// Initializing the victors and connecting it to the physical motors.
-		agitator = new CANTalon(ElectricalConstants.AGITATOR_MOTOR);
+		agitatorFeeder = new CANTalon(ElectricalConstants.AGITATOR_MOTOR);
+		agitatorHopper = new CANTalon(ElectricalConstants.AGITATOR_HOPPER);
 
-		conveyor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR);
-		
+		conveyor1 = new Talon(ElectricalConstants.CONVEYOR_MOTOR1);
+		conveyor2 = new Talon(ElectricalConstants.CONVEYOR_MOTOR2);
 
 		// Initializing the piston and connecting it to the physical pneumatic
 		// piston.
@@ -59,17 +62,14 @@ public class Conveyor extends Subsystem {
 		bForward = calcline.getIntercept(); // Calculating The Point of
 											// Intersection.
 
-		/*FeedbackDeviceStatus conveyorStatus = conveyor.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
-
-		switch (conveyorStatus) {
-		case FeedbackStatusPresent:
-			conveyorEncoderConnected = true;
-			break;
-		case FeedbackStatusNotPresent:
-			break;
-		case FeedbackStatusUnknown:
-			break;
-		}*/
+		/*
+		 * FeedbackDeviceStatus conveyorStatus =
+		 * conveyor.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		 * 
+		 * switch (conveyorStatus) { case FeedbackStatusPresent:
+		 * conveyorEncoderConnected = true; break; case
+		 * FeedbackStatusNotPresent: break; case FeedbackStatusUnknown: break; }
+		 */
 
 	}
 
@@ -78,31 +78,36 @@ public class Conveyor extends Subsystem {
 	}
 
 	// Function to control the agitator.
-	public void agitatorMotor(double input) {
-		agitator.set(input);
+	public void agitatorFeeder(double input) {
+		agitatorFeeder.set(input);
+	}
+	
+	public void agitatorHopper(double input) {
+		agitatorHopper.set(input);
 	}
 
 	// Function to control the Conveyor
 	public void conveyorMotor(double input) {
-		conveyor.set(input);
+		conveyor1.set(input);
+		conveyor2.set(input);
 	}
 
 	// Function to control the Piston
-	
 
 	// Function to get the distance value from the encoder.
 	public double getConveyorEncoder() {
-		return conveyor.getPosition();
+		return conveyor1.getPosition();
 	}
 
 	// Function to get the feed rate of the conveyor from the encoder.
 	public double getConveyorSpeed() {
-		return conveyor.getSpeed();
+		return (conveyor1.getSpeed() + conveyor2.getSpeed()) / 2;
 	}
 
 	// Function to reset the encoder on the conveyor.
 	public void resetConveyorEncoder() {
-		conveyor.setPosition(0);
+		conveyor1.setPosition(0);
+		conveyor2.setPosition(0);
 	}
 
 	// Function to set and control or call the RPM of the conveyor.

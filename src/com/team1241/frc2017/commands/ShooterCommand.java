@@ -25,7 +25,7 @@ public class ShooterCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Robot.oi.getToolLeftBumper()) {
+		if (Robot.oi.getToolRightBumper()) {
 			rpm.start();
 			//Robot.shooter.setShooter(Robot.power);
 			//Robot.shooter.openClaw();

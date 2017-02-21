@@ -28,7 +28,7 @@ public class Hanger extends Subsystem {
 
 	public void hangMotor(double input) {
 		hangMotorLeft.set(input);
-		hangMotorRight.set(input);
+		hangMotorRight.set(-input);
 	}
 
 	public void extendHangPiston() {

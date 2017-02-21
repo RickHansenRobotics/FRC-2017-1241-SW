@@ -28,8 +28,8 @@ public class IntakeCommand extends Command {
 		
 		
 
-		if (Robot.oi.getToolYButton()) {
-			Robot.intake.setIntakeSpeed(0.8);
+		if (Robot.oi.getToolAButton()) {
+			Robot.intake.setIntakeSpeed(0.9);
 		} else if (Robot.oi.getToolBButton()) {
 			Robot.intake.setIntakeSpeed(-0.8);
 		} else {
