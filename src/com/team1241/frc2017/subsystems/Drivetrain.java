@@ -179,6 +179,19 @@ public class Drivetrain extends Subsystem {
 		runRightDrive(-speed + angle);
 	}
 	
+	/**
+	 * Converts the pixel offset from the center of the image to degrees, which
+	 * is then used for turning the turret
+	 *
+	 * @param pixel
+	 *            The x coordinate pixel from the image. Ranging from 0 to 640
+	 *            on a 480x640 image
+	 * @return the double
+	 */
+	public double pixelToDegree(double pixel) {
+		return Math.toDegrees(Math.atan(((pixel - 320) * Math.tan(Math.toRadians(31.81))) / 320));
+	}
+	
 	public boolean drivePIDDone() {
 		return drivePID.isDone();
 	}

@@ -34,6 +34,10 @@ public class TurnCommand extends Command {
 		this.tolerance = tolerance;
 		requires(Robot.drive);
 	}
+	
+	public void changeAngle(double angle){
+		this.angle = angle;
+	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
