@@ -127,7 +127,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new TankDrive());
+		//setDefaultCommand(new TankDrive());
 	}
 
 	public void runLeftDrive(double input) {
@@ -168,8 +168,22 @@ public class Drivetrain extends Subsystem {
 	public void turnDrive(double setAngle, double speed, double tolerance) {
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 
-		runLeftDrive(-angle * speed);
-		runRightDrive(-angle * speed);
+		if(Math.abs(setAngle - getYaw()) < tolerance){
+			runLeftDrive(0);
+			runRightDrive(0);
+		}
+		else if(angle > -0.15 && angle < 0){
+			runLeftDrive(0.15);
+			runRightDrive(0.15);
+		}
+		else if(angle < 0.15 && angle > 0){
+			runLeftDrive(-0.15);
+			runRightDrive(-0.15);
+		}
+		else{
+			runLeftDrive(-angle * speed);
+			runRightDrive(-angle * speed);
+		}
 	}
 	
 	public void driveAngle(double setAngle, double speed) {
@@ -190,6 +204,13 @@ public class Drivetrain extends Subsystem {
 	 */
 	public double pixelToDegree(double pixel) {
 		return Math.toDegrees(Math.atan(((pixel - 320) * Math.tan(Math.toRadians(31.81))) / 320));
+		/*double y = 4*Math.pow(10, -13)*Math.pow(pixel,6) - 4*Math.pow(10, -10)*Math.pow(pixel,5) + Math.pow(10, -7)*Math.pow(pixel,4)
+				-Math.pow(10, -5)*Math.pow(pixel,3) - 0.0011*Math.pow(pixel, 2) + 0.0977*pixel + 11.537;
+		return y;*/
+	}
+	
+	public double getOffset(double y){
+		return 0.158593*y - 1.375;
 	}
 	
 	public boolean drivePIDDone() {

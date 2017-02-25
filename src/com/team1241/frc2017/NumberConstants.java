@@ -34,7 +34,7 @@ public class NumberConstants {
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	public static final double pShooter 								= 0.00;
+	public static final double pShooter 								= 0.002;
 	public static final double iShooter 								= 0.00;
 	public static final double dShooter 								= 0.00;
 

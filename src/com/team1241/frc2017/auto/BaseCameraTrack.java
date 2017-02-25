@@ -20,6 +20,7 @@ public class BaseCameraTrack extends Command {
 	private double xVal;
 	private boolean hasChanged;
 	private boolean started;
+	private boolean reached = false;
 	
 	public BaseCameraTrack(){
 		this(2.0);
@@ -38,7 +39,7 @@ public class BaseCameraTrack extends Command {
 		if(timeout > 0)
 			setTimeout(timeout);
 		
-		turn = new TurnCommand(0, 0.8, 1, 1);
+		turn = new TurnCommand(0, 0.8, 2, 1);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -56,7 +57,12 @@ public class BaseCameraTrack extends Command {
 
 				degree = Robot.drive.pixelToDegree(xVal);
 				
-				turn.changeAngle(Robot.drive.getYaw() - degree);
+				//if(Math.abs(degree) < 5 || reached){
+					//reached = true;
+					turn.changeAngle(Robot.drive.getYaw() + degree - Robot.drive.getOffset(target.getHeight()));
+				//}
+				//else if(!reached)
+					//turn.changeAngle(Robot.drive.getYaw() + degree);
 				turn.start();
 				hasChanged = false;
 			}

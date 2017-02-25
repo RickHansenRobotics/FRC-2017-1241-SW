@@ -3,7 +3,9 @@ package com.team1241.frc2017;
 
 import java.io.IOException;
 
+import com.team1241.frc2017.auto.BaseCameraTrack;
 import com.team1241.frc2017.auto.CenterGearCommand;
+import com.team1241.frc2017.auto.DriveCameraTrack;
 import com.team1241.frc2017.auto.DriveCommand;
 import com.team1241.frc2017.auto.LeftGearCommandBlue;
 import com.team1241.frc2017.auto.NoAuto;
@@ -16,6 +18,8 @@ import com.team1241.frc2017.subsystems.Hanger;
 import com.team1241.frc2017.subsystems.Hopper;
 import com.team1241.frc2017.subsystems.Intake;
 import com.team1241.frc2017.subsystems.Shooter;
+import com.team1241.frc2017.utilities.DataOutput;
+import com.team1241.frc2017.utilities.Target;
 import com.team1241.frc2017.utilities.UDPClient;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -56,7 +60,9 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	SendableChooser autoChooser;
 
-	UDPClient udp;
+	Target target = new Target();
+	
+	DataOutput data;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -71,6 +77,8 @@ public class Robot extends IterativeRobot {
 		hopper = new Hopper();
 		hanger = new Hanger();
 		conveyor = new Conveyor();
+		
+		data = new DataOutput("data.txt");
 
 		autoChooser = new SendableChooser();
 
@@ -165,6 +173,15 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		updateSmartDashboard();
+		//data.writeStatement(""+target.getCenterX(), ""+drive.getYaw());
+		
+		if(oi.getToolBackButton()){
+			//new BaseCameraTrack().start();
+			//new TurnCommand(-15, 0.8, 2, 1).start();
+			new DriveCameraTrack(36, 0.4, 3).start();
+		}
+		if(oi.getToolRightAnalogButton())
+			data.close();
 	}
 
 	/**
@@ -194,6 +211,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Gyro Angle", drive.getYaw());
 		SmartDashboard.putNumber("Right Encoder", drive.getRightDriveEncoder());
 		SmartDashboard.putNumber("Left Encoder", drive.getLeftDriveEncoder());
+		target.updateCoordinates();
+		SmartDashboard.putNumber("Center X Value", target.getCenterX());
+		SmartDashboard.putNumber("Pixel to Degree", drive.pixelToDegree(target.getCenterX()));
+		SmartDashboard.putNumber("offset", drive.getOffset(target.getTopY()));
+		SmartDashboard.putNumber("Height", target.getHeight());
+		SmartDashboard.putNumber("Setpoint", Robot.drive.getYaw() + drive.pixelToDegree(target.getCenterX()) - drive.getOffset(target.getHeight()));
+
 //		SmartDashboard.putNumber("Left Motor Current Draw", intake.getLeftMotorDraw());
 //		SmartDashboard.putNumber("Right Motor Current Draw", intake.getRightMotorDraw());
 

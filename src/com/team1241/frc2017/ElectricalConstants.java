@@ -19,8 +19,8 @@ public class ElectricalConstants {
 	public static final int LEFT_DRIVE_FRONT 								= 2;
 	public static final int LEFT_DRIVE_BACK 								= 1;
 
-	public static final int RIGHT_DRIVE_FRONT 								= 8;
-	public static final int RIGHT_DRIVE_BACK 								= 7;
+	public static final int RIGHT_DRIVE_FRONT 								= 10;
+	public static final int RIGHT_DRIVE_BACK 								= 9;
 	
 	// ***************************************************************************
 	// ************************* INTAKE MOTORS [SPARKS]***************************
@@ -46,8 +46,8 @@ public class ElectricalConstants {
 	// **************************** CONVEYOR MOTORS ******************************
 	// ***************************************************************************
 	
-	public static final int AGITATOR_MOTOR 									= 5;
-	public static final int AGITATOR_HOPPER 								= 6;
+	public static final int AGITATOR_MOTOR 									= 7;
+	public static final int AGITATOR_HOPPER 								= 8;
 	public static final int CONVEYOR_MOTOR1									= 6;
 	public static final int CONVEYOR_MOTOR2									= 7;
 	

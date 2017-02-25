@@ -30,18 +30,21 @@ public class IntakeCommand extends Command {
 
 		if (Robot.oi.getToolAButton()) {
 			Robot.intake.setIntakeSpeed(0.9);
+			
+		} else if (Robot.oi.getToolXButton()) {
+			Robot.intake.setIntakeSpeed(0.9);
 		} else if (Robot.oi.getToolBButton()) {
 			Robot.intake.setIntakeSpeed(-0.8);
 		} else {
 			Robot.intake.setIntakeSpeed(0);
 		}
-//
-//		toggle.set(Robot.oi.getToolRightBumper());
-//
-//		if (toggle.get())
-//			Robot.intake.extendIntake();
-//		else
-//			Robot.intake.retractIntake();
+
+		toggle.set(Robot.oi.getToolLeftBumper());
+
+		if (toggle.get())
+			Robot.intake.extendIntake();
+		else
+			Robot.intake.retractIntake();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

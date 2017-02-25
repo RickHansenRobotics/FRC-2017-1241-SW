@@ -16,13 +16,13 @@ public class Target {
 		numTargets = (int) server.getNumber("Number of Targets", 0);
 
 		if (numTargets == 2) {
-			box1 = server.getNumberArray("Box1", new double[] { 0, 0 });
-			box2 = server.getNumberArray("Box2", new double[] { 0, 0 });
+			box1 = server.getNumberArray("Box 1", new double[] { 0, 0 });
+			box2 = server.getNumberArray("Box 2", new double[] { 0, 0 });
 		} else if (numTargets == 1)
-			box1 = server.getNumberArray("Box1", new double[] { 0, 0 });
+			box1 = server.getNumberArray("Box 1", new double[] { 0, 0 });
 		else {
-			box1 = server.getNumberArray("Box1", new double[] { -1, -1 });
-			box2 = server.getNumberArray("Box2", new double[] { -1, -1 });
+			box1 = server.getNumberArray("Box 1", new double[] { -1, -1 });
+			box2 = server.getNumberArray("Box 2", new double[] { -1, -1 });
 		}
 	}
 
@@ -30,13 +30,13 @@ public class Target {
 		numTargets = (int) server.getNumber("Number of Targets", 0);
 
 		if (numTargets == 2) {
-			box1 = server.getNumberArray("Box1", new double[] { 0, 0 });
-			box2 = server.getNumberArray("Box2", new double[] { 0, 0 });
+			box1 = server.getNumberArray("Box 1", new double[] { 0, 0 });
+			box2 = server.getNumberArray("Box 2", new double[] { 0, 0 });
 		} else if (numTargets == 1)
-			box1 = server.getNumberArray("Box1", new double[] { 0, 0 });
+			box1 = server.getNumberArray("Box 1", new double[] { 0, 0 });
 		else {
-			box1 = server.getNumberArray("Box1", new double[] { -1, -1 });
-			box2 = server.getNumberArray("Box2", new double[] { -1, -1 });
+			box1 = server.getNumberArray("Box 1", new double[] { -1, -1 });
+			box2 = server.getNumberArray("Box 2", new double[] { -1, -1 });
 		}
 	}
 
@@ -58,6 +58,16 @@ public class Target {
 			avg = (box1[1] + box1[3]) / 2;
 
 		return avg;
+	}
+	
+	public double getHeight(){
+		double height = -1;
+		if (numTargets == 2)
+			height = ((box1[1] - box1[3]) + (box1[7] - box1[5]) + (box2[1] - box2[3]) + (box2[7] - box2[5])) / 4;
+		else if (numTargets == 1)
+			height = ((box1[1] - box1[3]) + (box1[7] - box1[5])) / 2;
+		
+		return height;
 	}
 	
 	public int numOfTargets(){
