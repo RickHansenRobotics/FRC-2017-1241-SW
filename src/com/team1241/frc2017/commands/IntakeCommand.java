@@ -24,13 +24,11 @@ public class IntakeCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
-		//Robot.intake.setIntakeSpeed(Robot.oi.getToolLeftY());
-		
-		
+		// Robot.intake.setIntakeSpeed(Robot.oi.getToolLeftY());
 
 		if (Robot.oi.getToolAButton()) {
 			Robot.intake.setIntakeSpeed(0.9);
-			
+
 		} else if (Robot.oi.getToolXButton()) {
 			Robot.intake.setIntakeSpeed(0.9);
 		} else if (Robot.oi.getToolBButton()) {
@@ -41,10 +39,12 @@ public class IntakeCommand extends Command {
 
 		toggle.set(Robot.oi.getToolLeftBumper());
 
-		if (toggle.get())
-			Robot.intake.extendIntake();
-		else
-			Robot.intake.retractIntake();
+		if (!Robot.hanger.hangerEngaged()) {
+			if (toggle.get())
+				Robot.intake.extendIntake();
+			else
+				Robot.intake.retractIntake();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

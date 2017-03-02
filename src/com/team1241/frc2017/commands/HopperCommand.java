@@ -26,10 +26,12 @@ public class HopperCommand extends Command {
 	protected void execute() {
 		toggle.set(Robot.oi.getToolLeftTrigger());
 
-		if (toggle.get()) {
-			Robot.hopper.ExtendHopper();
-		} else {
-			Robot.hopper.RetractHopper();
+		if(!Robot.hanger.hangerEngaged()){
+			if (toggle.get()) {
+				Robot.hopper.extendHopper();
+			} else {
+				Robot.hopper.retractHopper();
+			}
 		}
 	}
 

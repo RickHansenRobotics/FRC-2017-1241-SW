@@ -127,7 +127,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		//setDefaultCommand(new TankDrive());
+		setDefaultCommand(new TankDrive());
 	}
 
 	public void runLeftDrive(double input) {

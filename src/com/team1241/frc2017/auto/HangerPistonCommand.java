@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class HopperPistonCommand extends InstantCommand {
+public class HangerPistonCommand extends InstantCommand {
 
 	private boolean actuate;
 
-	public HopperPistonCommand(boolean actuate) {
+	public HangerPistonCommand(boolean actuate) {
 		super();
 		this.actuate = actuate;
 	}
@@ -19,9 +19,9 @@ public class HopperPistonCommand extends InstantCommand {
 	// Called once when the command executes
 	protected void initialize() {
 		if (actuate)
-			Robot.hopper.extendHopper();
+			Robot.hanger.extendStabilizerPiston();
 		else
-			Robot.hopper.retractHopper();
+			Robot.hanger.retractStabilizerPiston();
 	}
 
 }

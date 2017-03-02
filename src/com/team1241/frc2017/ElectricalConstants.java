@@ -42,6 +42,8 @@ public class ElectricalConstants {
 	public static final int LEFT_HANG_MOTOR									= 2;
 	public static final int RIGHT_HANG_MOTOR								= 3;
 	
+	public static final int HANGER_LIMIT_SWITCH                             = 0;
+	
 	// ***************************************************************************
 	// **************************** CONVEYOR MOTORS ******************************
 	// ***************************************************************************
@@ -56,8 +58,8 @@ public class ElectricalConstants {
 	// ******************************* PISTONS ***********************************
 	// ***************************************************************************
 	
-    public static final int CLAW_PISTON_A 									= 2;
-    public static final int CLAW_PISTON_B  									= 5;
+    public static final int CLAW_PISTON_A 									= 3;
+    public static final int CLAW_PISTON_B  									= 4;
     
     public static final int INTAKE_PISTON_A									= 0;
     public static final int INTAKE_PISTON_B									= 7;
@@ -65,8 +67,10 @@ public class ElectricalConstants {
     public static final int HOPPER_PISTON_A                                 = 1;
     public static final int HOPPER_PISTON_B 								= 6;
     
-    public static final int HANG_PISTON_A									= 3;
-    public static final int HANG_PISTON_B									= 4;
+    public static final int STABILIZER_PISTON_A								= 2;
+    public static final int STABILIZER_PISTON_B	  							= 5;
+    
+    
     
     // ***************************************************************************
  	// *********************** OPTICAL SENSOR [DIGITAL] **************************

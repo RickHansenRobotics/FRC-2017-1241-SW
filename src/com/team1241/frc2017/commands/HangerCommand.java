@@ -21,17 +21,23 @@ public class HangerCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		/*if(Robot.oi.getToolStartButton())
+		/*
+		 * if(Robot.oi.getToolStartButton()) Robot.hanger.hangMotor(1); else
+		 * Robot.hanger.hangMotor(0);
+		 */
+		if (Robot.hanger.limitSwitchIsPressed())
+			Robot.hanger.extendStabilizerPiston();
+
+		if (Robot.oi.getToolStartButton()) {
+			new HangSequence().start();
+			Robot.hanger.hangMotor(0.5);
+		} else if (Robot.oi.getToolStartButton() && Robot.hanger.hangerEngaged())
 			Robot.hanger.hangMotor(1);
-		else
+		else {
 			Robot.hanger.hangMotor(0);
-*/
-		Robot.hanger.hangMotor(Math.abs(Robot.oi.getToolRightY()));
-		if (Robot.oi.getToolRightBumper()) {
-			Robot.hanger.extendHangPiston();
-		} else if (Robot.oi.getToolRightTrigger()) {
-			Robot.hanger.retractHangPiston();
 		}
+
+		Robot.hanger.hangMotor(Math.abs(Robot.oi.getToolRightY()));
 
 	}
 
