@@ -84,8 +84,8 @@ public class Drivetrain extends Subsystem {
 		rightMaster.reverseSensor(false);
 
 		rightSlave = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
-		//rightSlave.changeControlMode(TalonControlMode.Follower);
-		//rightSlave.set(ElectricalConstants.RIGHT_DRIVE_FRONT);
+		rightSlave.changeControlMode(TalonControlMode.Follower);
+		rightSlave.set(ElectricalConstants.RIGHT_DRIVE_FRONT);
 
 		FeedbackDeviceStatus leftStatus = leftMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
 		FeedbackDeviceStatus rightStatus = rightMaster.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
@@ -193,6 +193,53 @@ public class Drivetrain extends Subsystem {
 		runRightDrive(-speed + angle);
 	}
 	
+	public double getLeftDriveMasterCurrent(){
+		return leftMaster.getOutputCurrent();
+	}
+	
+	public double getLeftDriveSlaveCurrent(){
+		return leftSlave.getOutputCurrent();
+	}
+	
+	public double getRightDriveMasterCurrent(){
+		return rightMaster.getOutputCurrent();
+	}
+	
+	public double getRightDriveSlaveCurrent(){
+		return rightSlave.getOutputCurrent();
+	}
+	
+	public boolean leftMasterNearTrip(){
+		if (getLeftDriveMasterCurrent()>60){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean leftSlaveNearTrip(){
+		if (getLeftDriveSlaveCurrent()>60){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean rightMasterNearTrip(){
+		if (getRightDriveMasterCurrent()>60){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean rightSlaveNearTrip(){
+		if (getRightDriveSlaveCurrent()>60){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	/**
 	 * Converts the pixel offset from the center of the image to degrees, which
 	 * is then used for turning the turret

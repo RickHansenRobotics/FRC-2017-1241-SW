@@ -26,20 +26,21 @@ public class IntakeCommand extends Command {
 
 		// Robot.intake.setIntakeSpeed(Robot.oi.getToolLeftY());
 
-		if (Robot.oi.getToolAButton()) {
-			Robot.intake.setIntakeSpeed(0.9);
+		if (Robot.oi.getToolXButton()) {
+			Robot.intake.setIntakeSpeed(1);
+		} else if (Robot.oi.getToolAButton()) {
 
-		} else if (Robot.oi.getToolXButton()) {
-			Robot.intake.setIntakeSpeed(0.9);
+			Robot.intake.setIntakeSpeed(1);
+
 		} else if (Robot.oi.getToolBButton()) {
-			Robot.intake.setIntakeSpeed(-0.8);
+			Robot.intake.setIntakeSpeed(-0.7);
 		} else {
 			Robot.intake.setIntakeSpeed(0);
 		}
 
 		toggle.set(Robot.oi.getToolLeftBumper());
 
-		if (!Robot.hanger.hangerEngaged()) {
+		if (!Robot.hanger.hangStarted()) {
 			if (toggle.get())
 				Robot.intake.extendIntake();
 			else

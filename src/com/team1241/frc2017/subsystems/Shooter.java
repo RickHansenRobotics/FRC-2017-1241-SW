@@ -1,5 +1,6 @@
 package com.team1241.frc2017.subsystems;
 
+import com.ctre.CANTalon;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.ShooterCommand;
@@ -17,8 +18,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-	Talon rightMotor;
-	Talon leftMotor;
+	CANTalon rightMotor;
+	CANTalon leftMotor;
+	
+	//Talon rightMotor;
+	//Talon leftMotor;
 
 	Counter optical;
 
@@ -36,8 +40,11 @@ public class Shooter extends Subsystem {
 	double prev = 0;
 
 	public Shooter() {
-		rightMotor = new Talon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
-		leftMotor = new Talon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
+		//rightMotor = new Talon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		//leftMotor = new Talon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
+		
+		rightMotor = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		leftMotor = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
 
 		optical = new Counter();
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR_SHOOTER);
@@ -97,12 +104,12 @@ public class Shooter extends Subsystem {
 	}
 
 	public void openClaw() {
-		claw.set(DoubleSolenoid.Value.kForward);
+		claw.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	// Function to control the Piston
 	public void closeClaw() {
-		claw.set(DoubleSolenoid.Value.kReverse);
+		claw.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public double getSlope() {

@@ -17,6 +17,7 @@ import com.team1241.frc2017.subsystems.Drivetrain;
 import com.team1241.frc2017.subsystems.Hanger;
 import com.team1241.frc2017.subsystems.Hopper;
 import com.team1241.frc2017.subsystems.Intake;
+import com.team1241.frc2017.subsystems.LEDstrips;
 import com.team1241.frc2017.subsystems.Shooter;
 import com.team1241.frc2017.utilities.DataOutput;
 import com.team1241.frc2017.utilities.Target;
@@ -48,6 +49,8 @@ public class Robot extends IterativeRobot {
 	public static Conveyor conveyor;
 	public static Hopper hopper;
 	public static Hanger hanger;
+	public static LEDstrips ledstrips;
+	
 
 	Preferences pref;
 	public static double rpm;
@@ -77,6 +80,7 @@ public class Robot extends IterativeRobot {
 		hopper = new Hopper();
 		hanger = new Hanger();
 		conveyor = new Conveyor();
+		ledstrips = new LEDstrips();
 		
 		data = new DataOutput("data.txt");
 
@@ -91,6 +95,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Center Gear Command", new CenterGearCommand());
 	
 		SmartDashboard.putData("Auto Mode", autoChooser);
+		
+		
 	}
 
 	/**
@@ -175,13 +181,15 @@ public class Robot extends IterativeRobot {
 		updateSmartDashboard();
 		//data.writeStatement(""+target.getCenterX(), ""+drive.getYaw());
 		
-		if(oi.getToolBackButton()){
+		/*if(oi.getToolBackButton()){
 			//new BaseCameraTrack().start();
 			//new TurnCommand(-15, 0.8, 2, 1).start();
 			new DriveCameraTrack(36, 0.4, 3).start();
 		}
 		if(oi.getToolRightAnalogButton())
-			data.close();
+			data.close();*/
+		//Robot.intake.retractIntake();
+		//hopper.retractHopper();
 	}
 
 	/**
@@ -216,8 +224,18 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Pixel to Degree", drive.pixelToDegree(target.getCenterX()));
 		SmartDashboard.putNumber("offset", drive.getOffset(target.getTopY()));
 		SmartDashboard.putNumber("Height", target.getHeight());
+		SmartDashboard.putBoolean("Limit Switch", hanger.limitEngaged());
 		SmartDashboard.putNumber("Setpoint", Robot.drive.getYaw() + drive.pixelToDegree(target.getCenterX()) - drive.getOffset(target.getHeight()));
-
+		
+		SmartDashboard.putNumber("Left Drive Master Current", drive.getLeftDriveMasterCurrent());
+		SmartDashboard.putNumber("Left Drive Slave Current", drive.getLeftDriveSlaveCurrent());
+		SmartDashboard.putNumber("Right Drive Master Current", drive.getRightDriveMasterCurrent());
+		SmartDashboard.putNumber("Right Drive Slave Current", drive.getRightDriveSlaveCurrent());
+		
+		SmartDashboard.putBoolean("Left Master Talon", drive.leftMasterNearTrip());
+		SmartDashboard.putBoolean("Left Slave Talon", drive.leftSlaveNearTrip());
+		SmartDashboard.putBoolean("Right Master Talon", drive.rightMasterNearTrip());
+		SmartDashboard.putBoolean("Right Slave Talon", drive.rightSlaveNearTrip());
 //		SmartDashboard.putNumber("Left Motor Current Draw", intake.getLeftMotorDraw());
 //		SmartDashboard.putNumber("Right Motor Current Draw", intake.getRightMotorDraw());
 

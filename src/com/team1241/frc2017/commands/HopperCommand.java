@@ -26,7 +26,7 @@ public class HopperCommand extends Command {
 	protected void execute() {
 		toggle.set(Robot.oi.getToolLeftTrigger());
 
-		if(!Robot.hanger.hangerEngaged()){
+		if(!Robot.hanger.hangStarted()){
 			if (toggle.get()) {
 				Robot.hopper.extendHopper();
 			} else {

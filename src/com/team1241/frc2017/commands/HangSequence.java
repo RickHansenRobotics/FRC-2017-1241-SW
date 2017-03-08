@@ -13,8 +13,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class HangSequence extends CommandGroup {
 
 	public HangSequence() {
-		addSequential(new IntakePistonCommand(false));
 		addSequential(new HopperPistonCommand(false));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new IntakePistonCommand(false));
 		addSequential(new WaitCommand(0.5));
 		addSequential(new HangerPistonCommand(false));
 	}

@@ -16,21 +16,21 @@ public class ElectricalConstants {
 	// *********************** DRIVE MOTORS [TALONS] *****************************
 	// ***************************************************************************
 
-	public static final int LEFT_DRIVE_FRONT 								= 2;
-	public static final int LEFT_DRIVE_BACK 								= 1;
+	public static final int LEFT_DRIVE_FRONT 								= 1;
+	public static final int LEFT_DRIVE_BACK 								= 2;
 
-	public static final int RIGHT_DRIVE_FRONT 								= 10;
-	public static final int RIGHT_DRIVE_BACK 								= 9;
+	public static final int RIGHT_DRIVE_FRONT 								= 9;
+	public static final int RIGHT_DRIVE_BACK 								= 10;
 	
 	// ***************************************************************************
-	// ************************* INTAKE MOTORS [SPARKS]***************************
+	// ************************* INTAKE MOTORS [SPARKS] **************************
 	// ***************************************************************************
 	
 	public static final int MAIN_INTAKE_ROLLERS								= 0;
 	public static final int SIDE_INTAKE_ROLLERS                             = 1;
 	
 	// ***************************************************************************
-	// ********************* SHOOTER MOTORS [TALON SR]****************************
+	// ********************* SHOOTER MOTORS [TALON SRX]***************************
 	// ***************************************************************************
 	
 	public static final int LEFT_SHOOTER_MOTOR								= 4;
@@ -48,10 +48,11 @@ public class ElectricalConstants {
 	// **************************** CONVEYOR MOTORS ******************************
 	// ***************************************************************************
 	
-	public static final int AGITATOR_MOTOR 									= 7;
-	public static final int AGITATOR_HOPPER 								= 8;
-	public static final int CONVEYOR_MOTOR1									= 6;
-	public static final int CONVEYOR_MOTOR2									= 7;
+	public static final int AGITATOR_MOTOR 									= 3;
+	public static final int AGITATOR_HOPPER 								= 6;
+	
+	public static final int CONVEYOR_MOTOR1									= 7;
+	public static final int CONVEYOR_MOTOR2									= 8;
 	
 	
 	// ***************************************************************************
@@ -70,14 +71,11 @@ public class ElectricalConstants {
     public static final int STABILIZER_PISTON_A								= 2;
     public static final int STABILIZER_PISTON_B	  							= 5;
     
-    
-    
     // ***************************************************************************
  	// *********************** OPTICAL SENSOR [DIGITAL] **************************
  	// ***************************************************************************
  	
- 	public static final int OPTICAL_SENSOR_SHOOTER                          = 6;
- 	public static final int OPTICAL_SENSOR_HANGER                           = 3;
+ 	public static final int OPTICAL_SENSOR_SHOOTER                          = 1;
     
     //****************************************************************************
   	//************************ CONVEYOR ENCODER CONSTANTS ************************
@@ -95,5 +93,13 @@ public class ElectricalConstants {
 	private static final double encoderGearRatio 					     = 42/36;
 	private static final double wheelRadius								 = 2;
 	public static final double ROTATIONS_TO_INCHES 		= 15.55;//2*Math.PI*wheelRadius*encoderGearRatio;
+	
+	//**************************************************************************
+    //**************************** LED PWM CONSTANTS ***************************
+    //**************************************************************************
+	public static final int HOPPER_PWM_PIN 							= 8;
+	public static final int SHOOTER_PWM_PIN							= 9;
 
+			
+	
 }

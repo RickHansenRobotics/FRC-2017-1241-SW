@@ -28,11 +28,11 @@ public class ShooterCommand extends Command {
 		if (Robot.oi.getToolRightBumper()) {
 			rpm.start();
 			//Robot.shooter.setShooter(Robot.power);
-			//Robot.shooter.openClaw();
+			Robot.shooter.openClaw();
 		} else {
 			rpm.cancel();
 			//Robot.shooter.setShooter(0);
-			//Robot.shooter.closeClaw();
+			Robot.shooter.closeClaw();
 		}
 	}
 

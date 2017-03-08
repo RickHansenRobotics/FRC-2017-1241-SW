@@ -21,8 +21,11 @@ public class Conveyor extends Subsystem {
 	CANTalon agitatorFeeder;
 	CANTalon agitatorHopper;
 
-	Talon conveyor1;
-	Talon conveyor2;
+	CANTalon conveyor1;
+	CANTalon conveyor2;
+	
+//	Talon conveyor1;
+//	Talon conveyor2;
 
 	// Declaring the piston being used e.g. the claw piston.
 	DoubleSolenoid claw;
@@ -45,8 +48,11 @@ public class Conveyor extends Subsystem {
 		agitatorFeeder = new CANTalon(ElectricalConstants.AGITATOR_MOTOR);
 		agitatorHopper = new CANTalon(ElectricalConstants.AGITATOR_HOPPER);
 
-		conveyor1 = new Talon(ElectricalConstants.CONVEYOR_MOTOR1);
-		conveyor2 = new Talon(ElectricalConstants.CONVEYOR_MOTOR2);
+		conveyor1 = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR1);
+		conveyor2 = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR2);
+		
+//		conveyor1 = new Talon(ElectricalConstants.CONVEYOR_MOTOR1);
+//		conveyor2 = new Talon(ElectricalConstants.CONVEYOR_MOTOR2);
 
 		// Initializing the piston and connecting it to the physical pneumatic
 		// piston.

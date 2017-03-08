@@ -19,6 +19,7 @@ public class Hanger extends Subsystem {
 
 	DoubleSolenoid stabilizerPiston;
 	boolean wasPressed = false;
+	boolean hangStarted = false;
 
 	DigitalInput hangSwitch;
 
@@ -31,6 +32,7 @@ public class Hanger extends Subsystem {
 
 		hangSwitch = new DigitalInput(ElectricalConstants.HANGER_LIMIT_SWITCH);
 
+		extendStabilizerPiston();
 	}
 
 	public void hangMotor(double input) {
@@ -39,21 +41,29 @@ public class Hanger extends Subsystem {
 	}
 
 	public void extendStabilizerPiston() {
-		stabilizerPiston.set(DoubleSolenoid.Value.kForward);
-	}
-
-	public void retractStabilizerPiston() {
 		stabilizerPiston.set(DoubleSolenoid.Value.kReverse);
 	}
 
+	public void retractStabilizerPiston() {
+		stabilizerPiston.set(DoubleSolenoid.Value.kForward);
+	}
+
 	public boolean limitSwitchIsPressed() {
-		if(hangSwitch.get())
+		if(!hangSwitch.get())
 			wasPressed = true;
-		return hangSwitch.get();
+		return !hangSwitch.get();
 	}
 	
-	public boolean hangerEngaged(){
+	public boolean limitEngaged(){
 		return wasPressed;
+	}
+	
+	public boolean hangStarted(){
+		return hangStarted;
+	}
+	
+	public void hangStarted(boolean state){
+		hangStarted = state;
 	}
 
 	public void initDefaultCommand() {

@@ -15,21 +15,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 
-	Talon mainIntakeRollers;
+	Spark mainIntakeRollers;
 	Spark sideIntakeRollers;
 
 	DoubleSolenoid intakePiston;
 
-	PowerDistributionPanel pdp;
-
 	public Intake() {
 
 		// Initialize Sparks
-		mainIntakeRollers = new Talon(ElectricalConstants.MAIN_INTAKE_ROLLERS);
+		mainIntakeRollers = new Spark(ElectricalConstants.MAIN_INTAKE_ROLLERS);
 		sideIntakeRollers = new Spark(ElectricalConstants.SIDE_INTAKE_ROLLERS);
 
 		intakePiston = new DoubleSolenoid(ElectricalConstants.INTAKE_PISTON_A,
-										  ElectricalConstants.INTAKE_PISTON_B);
+				                          ElectricalConstants.INTAKE_PISTON_B);
 
 	}
 
@@ -41,22 +39,15 @@ public class Intake extends Subsystem {
 	// INTAKE PISTON COMMANDS
 
 	public void extendIntake() {
-		intakePiston.set(DoubleSolenoid.Value.kForward);
+		intakePiston.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void retractIntake() {
-		intakePiston.set(DoubleSolenoid.Value.kReverse);
+		intakePiston.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new IntakeCommand());
 	}
 
-//	public double getLeftMotorDraw() {
-//		return pdp.getCurrent(ElectricalConstants.AGITATOR_MOTOR);
-//	}
-//
-//	public double getRightMotorDraw() {
-//		return pdp.getCurrent(ElectricalConstants.CONVEYOR_MOTOR);
-//	}
 }

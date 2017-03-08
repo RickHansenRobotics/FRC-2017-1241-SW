@@ -1,6 +1,7 @@
 package com.team1241.frc2017.commands;
 
 import com.team1241.frc2017.Robot;
+import com.team1241.frc2017.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class HangerCommand extends Command {
 
+	ToggleBoolean toggle = new ToggleBoolean();
+	
 	public HangerCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.hanger);
@@ -25,19 +28,27 @@ public class HangerCommand extends Command {
 		 * if(Robot.oi.getToolStartButton()) Robot.hanger.hangMotor(1); else
 		 * Robot.hanger.hangMotor(0);
 		 */
-		if (Robot.hanger.limitSwitchIsPressed())
-			Robot.hanger.extendStabilizerPiston();
-
-		if (Robot.oi.getToolStartButton()) {
-			new HangSequence().start();
-			Robot.hanger.hangMotor(0.5);
-		} else if (Robot.oi.getToolStartButton() && Robot.hanger.hangerEngaged())
+		if (Robot.oi.getToolStartButton() && Robot.hanger.limitEngaged()) {
 			Robot.hanger.hangMotor(1);
-		else {
+		} else if (Robot.oi.getToolStartButton() && !Robot.hanger.limitEngaged()) {
+			if (!Robot.hanger.hangStarted())
+				new HangSequence().start();
+			Robot.hanger.hangStarted(true);
+			Robot.hanger.hangMotor(0.5);
+		} else {
 			Robot.hanger.hangMotor(0);
 		}
+		toggle.set(Robot.oi.getToolBackButton());
+		if (Robot.oi.getToolBackButton()) {
+			Robot.hanger.retractStabilizerPiston();
 
-		Robot.hanger.hangMotor(Math.abs(Robot.oi.getToolRightY()));
+		} else if (Robot.hanger.limitSwitchIsPressed())
+			Robot.hanger.extendStabilizerPiston();
+		else{
+			Robot.hanger.extendStabilizerPiston();
+		}
+	
+	// Robot.hanger.hangMotor(Math.abs(Robot.oi.getToolRightY()));
 
 	}
 

@@ -21,11 +21,11 @@ public class Hopper extends Subsystem {
 	}
 
 	public void extendHopper() {
-		hopper.set(DoubleSolenoid.Value.kForward);
+		hopper.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void retractHopper() {
-		hopper.set(DoubleSolenoid.Value.kReverse);
+		hopper.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public void initDefaultCommand() {
