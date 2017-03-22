@@ -32,18 +32,18 @@ public class Intake extends Subsystem {
 	}
 
 	public void setIntakeSpeed(double speed) {
-		mainIntakeRollers.set(speed);
-		sideIntakeRollers.set(speed);
+		mainIntakeRollers.set(-speed);
+		sideIntakeRollers.set(-speed);
 	}
 
 	// INTAKE PISTON COMMANDS
 
 	public void extendIntake() {
-		intakePiston.set(DoubleSolenoid.Value.kReverse);
+		intakePiston.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public void retractIntake() {
-		intakePiston.set(DoubleSolenoid.Value.kForward);
+		intakePiston.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void initDefaultCommand() {

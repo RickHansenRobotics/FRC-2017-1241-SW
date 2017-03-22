@@ -14,6 +14,7 @@ public class HopperPistonCommand extends InstantCommand {
 	public HopperPistonCommand(boolean actuate) {
 		super();
 		this.actuate = actuate;
+		requires(Robot.hopper);
 	}
 
 	// Called once when the command executes

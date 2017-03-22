@@ -32,7 +32,7 @@ public class ShooterCommand extends Command {
 		} else {
 			rpm.cancel();
 			//Robot.shooter.setShooter(0);
-			Robot.shooter.closeClaw();
+			Robot.shooter.openClaw();
 		}
 	}
 

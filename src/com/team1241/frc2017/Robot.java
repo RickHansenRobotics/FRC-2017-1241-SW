@@ -7,10 +7,12 @@ import com.team1241.frc2017.auto.BaseCameraTrack;
 import com.team1241.frc2017.auto.CenterGearCommand;
 import com.team1241.frc2017.auto.DriveCameraTrack;
 import com.team1241.frc2017.auto.DriveCommand;
+import com.team1241.frc2017.auto.IntakePistonCommand;
 import com.team1241.frc2017.auto.LeftGearCommandBlue;
 import com.team1241.frc2017.auto.NoAuto;
 import com.team1241.frc2017.auto.RightGearCommandRed;
 import com.team1241.frc2017.auto.RightGearShootCommandRed;
+import com.team1241.frc2017.auto.ShootAuton;
 import com.team1241.frc2017.auto.TurnCommand;
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
@@ -50,21 +52,27 @@ public class Robot extends IterativeRobot {
 	public static Hopper hopper;
 	public static Hanger hanger;
 	public static LEDstrips ledstrips;
-	
 
 	Preferences pref;
 	public static double rpm;
+	public static double conveyorRPM;
 	public static double power;
 	public static double powerC;
 	public static double p;
 	public static double i;
 	public static double d;
+	public static double pDrive;
+	public static double iDrive;
+	public static double dDrive;
+	public static double pGyro;
+	public static double iGyro;
+	public static double dGyro;
 
 	Command autonomousCommand;
 	SendableChooser autoChooser;
 
 	Target target = new Target();
-	
+
 	DataOutput data;
 
 	/**
@@ -81,22 +89,24 @@ public class Robot extends IterativeRobot {
 		hanger = new Hanger();
 		conveyor = new Conveyor();
 		ledstrips = new LEDstrips();
-		
+
 		data = new DataOutput("data.txt");
 
 		autoChooser = new SendableChooser();
 
 		autoChooser.addDefault("No Auton", new NoAuto());
-		//autoChooser.addObject("Drive Straight", new ProfiledPath(DriveStraightProfile.Points, DriveStraightProfile.kNumPoints));
-		autoChooser.addObject("Drive Straight", new DriveCommand(72,0.8,0,5));
-		autoChooser.addObject("Turn Command", new TurnCommand(90,0.8,5,1));
+		// autoChooser.addObject("Drive Straight", new
+		// ProfiledPath(DriveStraightProfile.Points,
+		// DriveStraightProfile.kNumPoints));
+		autoChooser.addObject("Drive Straight", new DriveCommand(93, 0.25, 2, 5));
+		autoChooser.addObject("Turn Command", new TurnCommand(90, 0.8, 5, 1));
 		autoChooser.addObject("Left Gear Command Blue", new LeftGearCommandBlue());
 		autoChooser.addObject("Right Gear Command Red", new RightGearCommandRed());
 		autoChooser.addObject("Center Gear Command", new CenterGearCommand());
-	
-		SmartDashboard.putData("Auto Mode", autoChooser);
-		
-		
+		autoChooser.addObject("Shoot Auto", new ShootAuton());
+
+		SmartDashboard.putData("Auto Mode(s)", autoChooser);
+
 	}
 
 	/**
@@ -125,8 +135,9 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		//autonomousCommand = (Command) autoChooser.getSelected();
-		autonomousCommand = new RightGearShootCommandRed();
+		// autonomousCommand = (Command) autoChooser.getSelected();
+		//autonomousCommand = new CenterGearCommand();
+		 autonomousCommand = new ShootAuton();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -152,6 +163,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		rpm = pref.getDouble("RPM", 0.0);
+		conveyorRPM = pref.getDouble("Conveyor RPM", 0.0);
 		power = pref.getDouble("Shooter Power", 0.0);
 		powerC = pref.getDouble("Conveyor Power", 0.0);
 		p = pref.getDouble("Shooter pGain", 0.0);
@@ -160,14 +172,12 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		/*try {
-			new UDPClient().start();
-			SmartDashboard.putString("thread", "start");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			SmartDashboard.putString("thread", e.toString());
-		}*/
+		/*
+		 * try { new UDPClient().start(); SmartDashboard.putString("thread",
+		 * "start"); } catch (IOException e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); SmartDashboard.putString("thread",
+		 * e.toString()); }
+		 */
 		pref = Preferences.getInstance();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -179,17 +189,15 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		updateSmartDashboard();
-		//data.writeStatement(""+target.getCenterX(), ""+drive.getYaw());
-		
-		/*if(oi.getToolBackButton()){
-			//new BaseCameraTrack().start();
-			//new TurnCommand(-15, 0.8, 2, 1).start();
-			new DriveCameraTrack(36, 0.4, 3).start();
-		}
-		if(oi.getToolRightAnalogButton())
-			data.close();*/
-		//Robot.intake.retractIntake();
-		//hopper.retractHopper();
+		// data.writeStatement(""+target.getCenterX(), ""+drive.getYaw());
+
+		/*
+		 * if(oi.getToolBackButton()){ //new BaseCameraTrack().start(); //new
+		 * TurnCommand(-15, 0.8, 2, 1).start(); new DriveCameraTrack(36, 0.4,
+		 * 3).start(); } if(oi.getToolRightAnalogButton()) data.close();
+		 */
+		// Robot.intake.retractIntake();
+		// hopper.retractHopper();
 	}
 
 	/**
@@ -208,8 +216,17 @@ public class Robot extends IterativeRobot {
 		p = pref.getDouble("Shooter pGain", 0.0);
 		i = pref.getDouble("Shooter iGain", 0.0);
 		d = pref.getDouble("Shooter dGain", 0.0);
+
+		pDrive = pref.getDouble("Drive pGain", 0.0);
+		iDrive = pref.getDouble("Drive iGain", 0.0);
+		dDrive = pref.getDouble("Drive dGain", 0.0);
+
+		pGyro = pref.getDouble("Gyro pGain", 0.0);
+		iGyro = pref.getDouble("Gyro iGain", 0.0);
+		dGyro = pref.getDouble("Gyro dGain", 0.0);
+
 		counter++;
-		if (counter % 50 == 0){
+		if (counter % 50 == 0) {
 			SmartDashboard.putNumber("counter", counter / 50);
 		}
 		SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
@@ -225,19 +242,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("offset", drive.getOffset(target.getTopY()));
 		SmartDashboard.putNumber("Height", target.getHeight());
 		SmartDashboard.putBoolean("Limit Switch", hanger.limitEngaged());
-		SmartDashboard.putNumber("Setpoint", Robot.drive.getYaw() + drive.pixelToDegree(target.getCenterX()) - drive.getOffset(target.getHeight()));
-		
-		SmartDashboard.putNumber("Left Drive Master Current", drive.getLeftDriveMasterCurrent());
-		SmartDashboard.putNumber("Left Drive Slave Current", drive.getLeftDriveSlaveCurrent());
-		SmartDashboard.putNumber("Right Drive Master Current", drive.getRightDriveMasterCurrent());
-		SmartDashboard.putNumber("Right Drive Slave Current", drive.getRightDriveSlaveCurrent());
-		
-		SmartDashboard.putBoolean("Left Master Talon", drive.leftMasterNearTrip());
-		SmartDashboard.putBoolean("Left Slave Talon", drive.leftSlaveNearTrip());
-		SmartDashboard.putBoolean("Right Master Talon", drive.rightMasterNearTrip());
-		SmartDashboard.putBoolean("Right Slave Talon", drive.rightSlaveNearTrip());
-//		SmartDashboard.putNumber("Left Motor Current Draw", intake.getLeftMotorDraw());
-//		SmartDashboard.putNumber("Right Motor Current Draw", intake.getRightMotorDraw());
+		SmartDashboard.putNumber("Setpoint",
+				Robot.drive.getYaw() + drive.pixelToDegree(target.getCenterX()) - drive.getOffset(target.getHeight()));
 
+		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
 	}
 }

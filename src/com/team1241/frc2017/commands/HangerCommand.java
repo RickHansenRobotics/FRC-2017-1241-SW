@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class HangerCommand extends Command {
 
 	ToggleBoolean toggle = new ToggleBoolean();
-	
+
 	public HangerCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.hanger);
@@ -34,21 +34,24 @@ public class HangerCommand extends Command {
 			if (!Robot.hanger.hangStarted())
 				new HangSequence().start();
 			Robot.hanger.hangStarted(true);
-			Robot.hanger.hangMotor(0.5);
+			Robot.hanger.hangMotor(0.37);
 		} else {
 			Robot.hanger.hangMotor(0);
 		}
-		toggle.set(Robot.oi.getToolBackButton());
-		if (Robot.oi.getToolBackButton()) {
-			Robot.hanger.retractStabilizerPiston();
+		// toggle.set(Robot.oi.getToolBackButton());
+		/*
+		 * if (Robot.oi.getToolBackButton()) {
+		 * Robot.hanger.retractStabilizerPiston();
+		 * 
+		 * } else
+		 */
+		if (Robot.hanger.limitSwitchIsPressed())
+			Robot.hanger.extendStabilizerPiston();
+		// else{
+		// Robot.hanger.extendStabilizerPiston();
+		// }
 
-		} else if (Robot.hanger.limitSwitchIsPressed())
-			Robot.hanger.extendStabilizerPiston();
-		else{
-			Robot.hanger.extendStabilizerPiston();
-		}
-	
-	// Robot.hanger.hangMotor(Math.abs(Robot.oi.getToolRightY()));
+		// Robot.hanger.hangMotor(Math.abs(Robot.oi.getToolRightY()));
 
 	}
 

@@ -51,8 +51,8 @@ public class ElectricalConstants {
 	public static final int AGITATOR_MOTOR 									= 3;
 	public static final int AGITATOR_HOPPER 								= 6;
 	
-	public static final int CONVEYOR_MOTOR1									= 7;
-	public static final int CONVEYOR_MOTOR2									= 8;
+	public static final int CONVEYOR_MOTOR1									= 8;
+	public static final int CONVEYOR_MOTOR2									= 7;
 	
 	
 	// ***************************************************************************

@@ -1,6 +1,8 @@
 package com.team1241.frc2017.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.FeedbackDeviceStatus;
 import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.commands.ConveyorCommand;
@@ -21,11 +23,11 @@ public class Conveyor extends Subsystem {
 	CANTalon agitatorFeeder;
 	CANTalon agitatorHopper;
 
-	CANTalon conveyor1;
-	CANTalon conveyor2;
-	
-//	Talon conveyor1;
-//	Talon conveyor2;
+	CANTalon conveyorMaster;
+	CANTalon conveyorSlave;
+
+	// Talon conveyor1;
+	// Talon conveyor2;
 
 	// Declaring the piston being used e.g. the claw piston.
 	DoubleSolenoid claw;
@@ -48,11 +50,14 @@ public class Conveyor extends Subsystem {
 		agitatorFeeder = new CANTalon(ElectricalConstants.AGITATOR_MOTOR);
 		agitatorHopper = new CANTalon(ElectricalConstants.AGITATOR_HOPPER);
 
-		conveyor1 = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR1);
-		conveyor2 = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR2);
-		
-//		conveyor1 = new Talon(ElectricalConstants.CONVEYOR_MOTOR1);
-//		conveyor2 = new Talon(ElectricalConstants.CONVEYOR_MOTOR2);
+		conveyorMaster = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR1);
+		conveyorMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		conveyorMaster.reverseSensor(false);
+
+		conveyorSlave = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR2);
+
+		// conveyor1 = new Talon(ElectricalConstants.CONVEYOR_MOTOR1);
+		// conveyor2 = new Talon(ElectricalConstants.CONVEYOR_MOTOR2);
 
 		// Initializing the piston and connecting it to the physical pneumatic
 		// piston.
@@ -68,15 +73,20 @@ public class Conveyor extends Subsystem {
 		bForward = calcline.getIntercept(); // Calculating The Point of
 											// Intersection.
 
-		/*
-		 * FeedbackDeviceStatus conveyorStatus =
-		 * conveyor.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
-		 * 
-		 * switch (conveyorStatus) { case FeedbackStatusPresent:
-		 * conveyorEncoderConnected = true; break; case
-		 * FeedbackStatusNotPresent: break; case FeedbackStatusUnknown: break; }
-		 */
-
+		FeedbackDeviceStatus conveyorMasterStatus = conveyorMaster
+				.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		FeedbackDeviceStatus conveyorSlaveStatus = conveyorMaster
+				.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
+		
+		switch (conveyorMasterStatus) {
+		case FeedbackStatusPresent:
+			conveyorEncoderConnected = true;
+			break;
+		case FeedbackStatusNotPresent:
+			break;
+		case FeedbackStatusUnknown:
+			break;
+		}
 	}
 
 	public void initDefaultCommand() {
@@ -87,39 +97,43 @@ public class Conveyor extends Subsystem {
 	public void agitatorFeeder(double input) {
 		agitatorFeeder.set(input);
 	}
-	
+
 	public void agitatorHopper(double input) {
-		agitatorHopper.set(input);
+		agitatorHopper.set(-input);
 	}
 
 	// Function to control the Conveyor
-	public void conveyorMotor(double input) {
-		conveyor1.set(input);
-		conveyor2.set(input);
+	public void setConveyorPower(double input) {
+		conveyorMaster.set(input);
+		conveyorSlave.set(-input);
 	}
 
 	// Function to control the Piston
 
 	// Function to get the distance value from the encoder.
 	public double getConveyorEncoder() {
-		return conveyor1.getPosition();
+		return conveyorMaster.getPosition();
 	}
 
 	// Function to get the feed rate of the conveyor from the encoder.
 	public double getConveyorSpeed() {
-		return (conveyor1.getSpeed() + conveyor2.getSpeed()) / 2;
+		return conveyorMaster.getSpeed();
 	}
 
 	// Function to reset the encoder on the conveyor.
 	public void resetConveyorEncoder() {
-		conveyor1.setPosition(0);
-		conveyor2.setPosition(0);
+		conveyorMaster.setPosition(0);
+		conveyorSlave.setPosition(0);
 	}
 
 	// Function to set and control or call the RPM of the conveyor.
 	public void setRPM(double RPM) {
 		double output = conveyorPID.calcPID(RPM, getConveyorSpeed(), 50);
-		conveyorMotor(RPM * kForward + bForward + output);
+		setConveyorPower(RPM * kForward + bForward + output);
+	}
+	
+	public void resetPID(){
+		conveyorPID.resetPID();
 	}
 
 }

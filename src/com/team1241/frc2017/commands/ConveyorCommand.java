@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ConveyorCommand extends Command {
+	
+	private SetConveyorRPM rpm;
+	private SetConveyorRPM reverseRPM;
 
 	public ConveyorCommand() {
 		requires(Robot.conveyor);
@@ -15,6 +18,8 @@ public class ConveyorCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		rpm = new SetConveyorRPM(Robot.conveyorRPM);
+		reverseRPM = new SetConveyorRPM(-Robot.conveyorRPM);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -22,16 +27,22 @@ public class ConveyorCommand extends Command {
 
 		if (Robot.oi.getToolXButton()) {
 			Robot.conveyor.agitatorFeeder(-0.5);
-			Robot.conveyor.agitatorHopper(0.6);
-			Robot.conveyor.conveyorMotor(-0.8);
+			Robot.conveyor.agitatorHopper(0.5);
+			//reverseRPM.cancel();
+			//rpm.start();
+			Robot.conveyor.setConveyorPower(-0.4);
 		} else if (Robot.oi.getToolAButton()) {
 			Robot.conveyor.agitatorFeeder(-0.9);
 			Robot.conveyor.agitatorHopper(0.25);
-			Robot.conveyor.conveyorMotor(0.65);
+			//rpm.cancel();
+			//reverseRPM.start();
+			Robot.conveyor.setConveyorPower(0.65);
 		} else {
 			Robot.conveyor.agitatorFeeder(0);
 			Robot.conveyor.agitatorHopper(0);
-			Robot.conveyor.conveyorMotor(0);
+			//rpm.cancel();
+			//reverseRPM.cancel();
+			Robot.conveyor.setConveyorPower(0);
 		}
 
 	}

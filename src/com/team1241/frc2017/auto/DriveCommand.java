@@ -31,6 +31,8 @@ public class DriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drive.changeDriveGains(Robot.pDrive, Robot.iDrive, Robot.dDrive);
+    	Robot.drive.changeGyroGains(Robot.pGyro, Robot.iGyro, Robot.dGyro);
     	Robot.drive.resetEncoders();
     	setTimeout(timeOut);
     }

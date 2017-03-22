@@ -14,9 +14,9 @@ public class HangSequence extends CommandGroup {
 
 	public HangSequence() {
 		addSequential(new HopperPistonCommand(false));
-		addSequential(new WaitCommand(0.5));
+		addSequential(new WaitCommand(0.125));
 		addSequential(new IntakePistonCommand(false));
-		addSequential(new WaitCommand(0.5));
+		addSequential(new WaitCommand(0.125));
 		addSequential(new HangerPistonCommand(false));
 	}
 }

@@ -10,6 +10,10 @@ import com.team1241.frc2017.commands.TankDrive;
 import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.Nav6;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -33,9 +37,10 @@ public class Drivetrain extends Subsystem {
 	private boolean leftEncoderConnected = false;
 	private boolean rightEncoderConnected = false;
 
-	/** Gyro on the drive */
-	private SerialPort serialPort;
-	private Nav6 gyro;
+	/** Gyro on the drive *//*
+							 * private SerialPort serialPort; private Nav6 gyro;
+							 */
+	AHRS gyro;
 
 	/** The drive PID controller. */
 	private PIDController drivePID;
@@ -48,26 +53,27 @@ public class Drivetrain extends Subsystem {
 	 * components related to the subsystem
 	 */
 	public Drivetrain() {
+		/*
+		 * try { serialPort = new SerialPort(57600, SerialPort.Port.kOnboard);
+		 * 
+		 * // You can add a second parameter to modify the // update rate (in
+		 * hz) from 4 to 100. The default is 100. // If you need to minimize CPU
+		 * load, you can set it to a // lower value, as shown here, depending
+		 * upon your needs.
+		 * 
+		 * // You can also use the IMUAdvanced class for advanced // features.
+		 * 
+		 * byte update_rate_hz = 50; gyro = new Nav6(serialPort,
+		 * update_rate_hz);
+		 * 
+		 * if (!gyro.isCalibrating()) { Timer.delay(0.3); gyro.zeroYaw(); } }
+		 * catch (Exception e) { gyro = null; }
+		 */
+
 		try {
-			serialPort = new SerialPort(57600, SerialPort.Port.kOnboard);
-
-			// You can add a second parameter to modify the
-			// update rate (in hz) from 4 to 100. The default is 100.
-			// If you need to minimize CPU load, you can set it to a
-			// lower value, as shown here, depending upon your needs.
-
-			// You can also use the IMUAdvanced class for advanced
-			// features.
-
-			byte update_rate_hz = 50;
-			gyro = new Nav6(serialPort, update_rate_hz);
-
-			if (!gyro.isCalibrating()) {
-				Timer.delay(0.3);
-				gyro.zeroYaw();
-			}
-		} catch (Exception e) {
-			gyro = null;
+			gyro = new AHRS(SPI.Port.kMXP);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("ERROR navX: " + ex.getMessage(), true);
 		}
 
 		// Initialize Talons
@@ -113,15 +119,15 @@ public class Drivetrain extends Subsystem {
 		// Initialize PID controllers
 		drivePID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
-		
+
 		rightMaster.setProfile(0);
 		rightMaster.setPID(0.01, 0, 0);
 		rightMaster.setF(0.2670508);
-		
+
 		leftMaster.setProfile(0);
 		leftMaster.setPID(0.01, 0, 0);
 		leftMaster.setF(0.2670508);
-		
+
 		resetEncoders();
 		resetGyro();
 	}
@@ -136,23 +142,22 @@ public class Drivetrain extends Subsystem {
 
 	public void runRightDrive(double input) {
 		rightMaster.set(input);
-		rightSlave.set(input);
 	}
-	
-	public CANTalon getRightMaster(){
+
+	public CANTalon getRightMaster() {
 		return rightMaster;
 	}
-	
-	public CANTalon getLeftMaster(){
+
+	public CANTalon getLeftMaster() {
 		return leftMaster;
 	}
-	
-	public void motionProfileMode(){
+
+	public void motionProfileMode() {
 		rightMaster.changeControlMode(TalonControlMode.MotionProfile);
 		leftMaster.changeControlMode(TalonControlMode.MotionProfile);
 	}
-	
-	public void voltageMode(){
+
+	public void voltageMode() {
 		rightMaster.changeControlMode(TalonControlMode.PercentVbus);
 		leftMaster.changeControlMode(TalonControlMode.PercentVbus);
 	}
@@ -161,85 +166,35 @@ public class Drivetrain extends Subsystem {
 		double output = drivePID.calcPID(setPoint, getAverageDistance(), tolerance);
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 		SmartDashboard.putNumber("PID OUTPUT", angle);
-		runLeftDrive((-output - angle) * speed);
-		runRightDrive((output - angle) * speed);
+		runLeftDrive((-output - angle) * speed * 0.945);
+		runRightDrive((output - angle) * speed * 1);
 	}
 
 	public void turnDrive(double setAngle, double speed, double tolerance) {
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 
-		if(Math.abs(setAngle - getYaw()) < tolerance){
+		if (Math.abs(setAngle - getYaw()) < tolerance) {
 			runLeftDrive(0);
 			runRightDrive(0);
-		}
-		else if(angle > -0.15 && angle < 0){
+		} else if (angle > -0.15 && angle < 0) {
 			runLeftDrive(0.15);
 			runRightDrive(0.15);
-		}
-		else if(angle < 0.15 && angle > 0){
+		} else if (angle < 0.15 && angle > 0) {
 			runLeftDrive(-0.15);
 			runRightDrive(-0.15);
-		}
-		else{
+		} else {
 			runLeftDrive(-angle * speed);
 			runRightDrive(-angle * speed);
 		}
 	}
-	
+
 	public void driveAngle(double setAngle, double speed) {
 		double angle = gyroPID.calcPID(setAngle, getYaw(), 1);
 
-		runLeftDrive(speed + angle);
-		runRightDrive(-speed + angle);
+		runLeftDrive(-speed - angle);
+		runRightDrive(speed - angle);
 	}
-	
-	public double getLeftDriveMasterCurrent(){
-		return leftMaster.getOutputCurrent();
-	}
-	
-	public double getLeftDriveSlaveCurrent(){
-		return leftSlave.getOutputCurrent();
-	}
-	
-	public double getRightDriveMasterCurrent(){
-		return rightMaster.getOutputCurrent();
-	}
-	
-	public double getRightDriveSlaveCurrent(){
-		return rightSlave.getOutputCurrent();
-	}
-	
-	public boolean leftMasterNearTrip(){
-		if (getLeftDriveMasterCurrent()>60){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	public boolean leftSlaveNearTrip(){
-		if (getLeftDriveSlaveCurrent()>60){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	public boolean rightMasterNearTrip(){
-		if (getRightDriveMasterCurrent()>60){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	public boolean rightSlaveNearTrip(){
-		if (getRightDriveSlaveCurrent()>60){
-			return true;
-		}else{
-			return false;
-		}
-	}
+
 	/**
 	 * Converts the pixel offset from the center of the image to degrees, which
 	 * is then used for turning the turret
@@ -251,24 +206,35 @@ public class Drivetrain extends Subsystem {
 	 */
 	public double pixelToDegree(double pixel) {
 		return Math.toDegrees(Math.atan(((pixel - 320) * Math.tan(Math.toRadians(31.81))) / 320));
-		/*double y = 4*Math.pow(10, -13)*Math.pow(pixel,6) - 4*Math.pow(10, -10)*Math.pow(pixel,5) + Math.pow(10, -7)*Math.pow(pixel,4)
-				-Math.pow(10, -5)*Math.pow(pixel,3) - 0.0011*Math.pow(pixel, 2) + 0.0977*pixel + 11.537;
-		return y;*/
+		/*
+		 * double y = 4*Math.pow(10, -13)*Math.pow(pixel,6) - 4*Math.pow(10,
+		 * -10)*Math.pow(pixel,5) + Math.pow(10, -7)*Math.pow(pixel,4)
+		 * -Math.pow(10, -5)*Math.pow(pixel,3) - 0.0011*Math.pow(pixel, 2) +
+		 * 0.0977*pixel + 11.537; return y;
+		 */
 	}
-	
-	public double getOffset(double y){
-		return 0.158593*y - 1.375;
+
+	public double getOffset(double y) {
+		return 0.158593 * y - 1.375;
 	}
-	
+
 	public boolean drivePIDDone() {
 		return drivePID.isDone();
 	}
-	
+
 	public boolean gyroPIDDone() {
 		return gyroPID.isDone();
 	}
-	
-	public void resetPID(){
+
+	public void changeDriveGains(double p, double i, double d) {
+		drivePID.changePIDGains(p, i, d);
+	}
+
+	public void changeGyroGains(double p, double i, double d) {
+		gyroPID.changePIDGains(p, i, d);
+	}
+
+	public void resetPID() {
 		drivePID.resetPID();
 		gyroPID.resetPID();
 	}
@@ -276,11 +242,11 @@ public class Drivetrain extends Subsystem {
 	// ENCODER FUNCTIONS
 
 	public double getLeftDriveEncoder() {
-		return leftMaster.getPosition()*ElectricalConstants.ROTATIONS_TO_INCHES;
+		return leftMaster.getPosition() * ElectricalConstants.ROTATIONS_TO_INCHES;
 	}
 
 	public double getRightDriveEncoder() {
-		return rightMaster.getPosition()*ElectricalConstants.ROTATIONS_TO_INCHES;
+		return rightMaster.getPosition() * ElectricalConstants.ROTATIONS_TO_INCHES;
 	}
 
 	public double getAverageDistance() {
@@ -310,8 +276,12 @@ public class Drivetrain extends Subsystem {
 		return gyro.isCalibrating();
 	}
 
+	/*
+	 * public double getYaw() { return gyro.getYaw(); }
+	 */
+
 	public double getYaw() {
-		return gyro.getYaw();
+		return gyro.getAngle();
 	}
 
 	public double getPitch() {

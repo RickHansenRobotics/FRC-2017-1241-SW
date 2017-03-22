@@ -14,6 +14,7 @@ public class IntakePistonCommand extends InstantCommand {
     public IntakePistonCommand(boolean actuate) {
         super();
         this.actuate = actuate;
+        requires(Robot.intake);
     }
 
     // Called once when the command executes

@@ -83,7 +83,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void setShooter(double input) {
-		rightMotor.set(input);
+		rightMotor.set(-input);
 		leftMotor.set(input);
 	}
 

@@ -25,16 +25,19 @@ public class NumberConstants {
     //**************************** PID VALUES (GYRO) ***************************
     //**************************************************************************
 	
-	public static final double pGyro 									 = 0.012;
+	public static final double pGyro 									 = 0.008;
 	public static final double iGyro 									 = 0.00;
-	public static final double dGyro 									 = 0.058
-			;
+	public static final double dGyro 									 = 0.00;
 	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	public static final double pShooter 								= 0.002;
+	/*public static final double pShooter 								= 0.00005;
+	public static final double iShooter 								= 0.000001;
+	public static final double dShooter 								= 0.00;*/
+	
+	public static final double pShooter 								= 0.00015;
 	public static final double iShooter 								= 0.00;
 	public static final double dShooter 								= 0.00;
 
@@ -50,11 +53,14 @@ public class NumberConstants {
     //**************************** LINE REGRESSION *****************************
     //**************************************************************************
 	
-	public static final int[] RPMS_CONVEYOR = new int[] {4000, 4100, 4250, 4500, 5000};
-	public static final double[] POWERS_CONVEYOR = new double[] { 0.6, 0.7, 0.8, 0.9, 1.0};
+	public static final int[] RPMS_CONVEYOR = new int[] {1300, 4100, 1350, 4500, 5000};
+	public static final double[] POWERS_CONVEYOR = new double[] { 0.5, 0.7, 0.4, 0.9, 1.0};
 	
-	public static final int[] RPMS_SHOOTER = new int[] { 2800, 3100, 3400, 3800, 4000 };
-	public static final double[] POWERS_SHOOTER = new double[] { 0.48, 0.53, 0.59, 0.68, 0.72 };
+	/*public static final int[] RPMS_SHOOTER = new int[] { 2800, 3100, 3400, 3800, 4000 };
+	public static final double[] POWERS_SHOOTER = new double[] { 0.48, 0.53, 0.59, 0.68, 0.72 };*/
+	
+	public static final int[] RPMS_SHOOTER = new int[] { 2430, 2750, 3030, 3300, 3570 };
+	public static final double[] POWERS_SHOOTER = new double[] { 0.4, 0.45, 0.5, 0.55, 0.6};
 	
 	//**************************************************************************
     //******************************* RPM VALUES *******************************
