@@ -166,7 +166,7 @@ public class Drivetrain extends Subsystem {
 		double output = drivePID.calcPID(setPoint, getAverageDistance(), tolerance);
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 		SmartDashboard.putNumber("PID OUTPUT", angle);
-		runLeftDrive((-output - angle) * speed * 0.945);
+		runLeftDrive((-output - angle) * speed * 0.825);
 		runRightDrive((output - angle) * speed * 1);
 	}
 
@@ -247,6 +247,14 @@ public class Drivetrain extends Subsystem {
 
 	public double getRightDriveEncoder() {
 		return rightMaster.getPosition() * ElectricalConstants.ROTATIONS_TO_INCHES;
+	}
+	
+	public double getLeftDriveRotations(){
+		return leftMaster.getPosition();
+	}
+	
+	public double getRightDriveRotations(){
+		return rightMaster.getPosition();
 	}
 
 	public double getAverageDistance() {

@@ -90,11 +90,10 @@ public class DrivePath extends Command {
 			if (-Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter <= curve.size())
 				counter++;
 			Robot.drive.driveSetpoint(-distance, speed, curve.findAngle(counter), 1);
-			SmartDashboard.putNumber("Bezier Angle", curve.findAngle(counter));
 		} else {
 			if (Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < curve.size())
 				counter++;
-
+			System.out.println("Bezier Angle " + curve.findAngle(counter) + " " + distance); 	
 			Robot.drive.driveSetpoint(distance, speed, curve.findAngle(counter), 1);
 		}
 	}

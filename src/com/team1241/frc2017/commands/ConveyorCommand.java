@@ -28,21 +28,21 @@ public class ConveyorCommand extends Command {
 		if (Robot.oi.getToolXButton()) {
 			Robot.conveyor.agitatorFeeder(-0.5);
 			Robot.conveyor.agitatorHopper(0.5);
-			//reverseRPM.cancel();
-			//rpm.start();
-			Robot.conveyor.setConveyorPower(-0.4);
+			reverseRPM.cancel();
+			rpm.start();
+			//Robot.conveyor.setConveyorPower(-1);
 		} else if (Robot.oi.getToolAButton()) {
 			Robot.conveyor.agitatorFeeder(-0.9);
 			Robot.conveyor.agitatorHopper(0.25);
-			//rpm.cancel();
-			//reverseRPM.start();
-			Robot.conveyor.setConveyorPower(0.65);
+			rpm.cancel();
+			reverseRPM.start();
+			//Robot.conveyor.setConveyorPower(0.65);
 		} else {
 			Robot.conveyor.agitatorFeeder(0);
 			Robot.conveyor.agitatorHopper(0);
-			//rpm.cancel();
-			//reverseRPM.cancel();
-			Robot.conveyor.setConveyorPower(0);
+			rpm.cancel();
+			reverseRPM.cancel();
+			//Robot.conveyor.setConveyorPower(0);
 		}
 
 	}

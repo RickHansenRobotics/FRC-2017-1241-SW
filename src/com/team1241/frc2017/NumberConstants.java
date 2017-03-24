@@ -25,9 +25,9 @@ public class NumberConstants {
     //**************************** PID VALUES (GYRO) ***************************
     //**************************************************************************
 	
-	public static final double pGyro 									 = 0.008;
-	public static final double iGyro 									 = 0.00;
-	public static final double dGyro 									 = 0.00;
+	public static final double pGyro 									 = 0.015;
+	public static final double iGyro 									 = 0.0000003;
+	public static final double dGyro 									 = 0.05;
 	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
@@ -53,8 +53,8 @@ public class NumberConstants {
     //**************************** LINE REGRESSION *****************************
     //**************************************************************************
 	
-	public static final int[] RPMS_CONVEYOR = new int[] {1300, 4100, 1350, 4500, 5000};
-	public static final double[] POWERS_CONVEYOR = new double[] { 0.5, 0.7, 0.4, 0.9, 1.0};
+	public static final int[] RPMS_CONVEYOR = new int[] {-420, -1100, -1780, -2350, -2850};
+	public static final double[] POWERS_CONVEYOR = new double[] { -0.2, -0.4, -0.6, -0.8, -1.0};
 	
 	/*public static final int[] RPMS_SHOOTER = new int[] { 2800, 3100, 3400, 3800, 4000 };
 	public static final double[] POWERS_SHOOTER = new double[] { 0.48, 0.53, 0.59, 0.68, 0.72 };*/

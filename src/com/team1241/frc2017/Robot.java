@@ -1,14 +1,12 @@
 
 package com.team1241.frc2017;
 
-import java.io.IOException;
-
-import com.team1241.frc2017.auto.BaseCameraTrack;
 import com.team1241.frc2017.auto.CenterGearCommand;
-import com.team1241.frc2017.auto.DriveCameraTrack;
 import com.team1241.frc2017.auto.DriveCommand;
-import com.team1241.frc2017.auto.IntakePistonCommand;
+import com.team1241.frc2017.auto.HopperAutoBlue;
 import com.team1241.frc2017.auto.LeftGearCommandBlue;
+import com.team1241.frc2017.auto.LeftGearCommandRed;
+import com.team1241.frc2017.auto.LeftGearShootCommandBlue;
 import com.team1241.frc2017.auto.NoAuto;
 import com.team1241.frc2017.auto.RightGearCommandRed;
 import com.team1241.frc2017.auto.RightGearShootCommandRed;
@@ -23,7 +21,6 @@ import com.team1241.frc2017.subsystems.LEDstrips;
 import com.team1241.frc2017.subsystems.Shooter;
 import com.team1241.frc2017.utilities.DataOutput;
 import com.team1241.frc2017.utilities.Target;
-import com.team1241.frc2017.utilities.UDPClient;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -98,12 +95,15 @@ public class Robot extends IterativeRobot {
 		// autoChooser.addObject("Drive Straight", new
 		// ProfiledPath(DriveStraightProfile.Points,
 		// DriveStraightProfile.kNumPoints));
-		autoChooser.addObject("Drive Straight", new DriveCommand(93, 0.25, 2, 5));
+		autoChooser.addObject("Drive Straight", new DriveCommand(72, 0.6, 0, 5));
 		autoChooser.addObject("Turn Command", new TurnCommand(90, 0.8, 5, 1));
+		autoChooser.addObject("Left Gear Command Red", new LeftGearCommandRed());
 		autoChooser.addObject("Left Gear Command Blue", new LeftGearCommandBlue());
 		autoChooser.addObject("Right Gear Command Red", new RightGearCommandRed());
 		autoChooser.addObject("Center Gear Command", new CenterGearCommand());
 		autoChooser.addObject("Shoot Auto", new ShootAuton());
+		autoChooser.addObject("Left Gear Shoot Command Blue", new LeftGearShootCommandBlue());
+		autoChooser.addObject("Right Gear Shoot Command Red", new RightGearShootCommandRed());
 
 		SmartDashboard.putData("Auto Mode(s)", autoChooser);
 
@@ -137,7 +137,11 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// autonomousCommand = (Command) autoChooser.getSelected();
 		//autonomousCommand = new CenterGearCommand();
-		 autonomousCommand = new ShootAuton();
+		 //autonomousCommand = new LeftGearShootCommandBlue();
+		//autonomousCommand = new TurnCommand(90, 0.8,5 ,1);
+		autonomousCommand = new LeftGearCommandBlue();
+		//autonomousCommand = new RightGearShootCommandRed();
+		//autonomousCommand = new HopperAutoBlue();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -236,11 +240,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Gyro Angle", drive.getYaw());
 		SmartDashboard.putNumber("Right Encoder", drive.getRightDriveEncoder());
 		SmartDashboard.putNumber("Left Encoder", drive.getLeftDriveEncoder());
-		target.updateCoordinates();
-		SmartDashboard.putNumber("Center X Value", target.getCenterX());
-		SmartDashboard.putNumber("Pixel to Degree", drive.pixelToDegree(target.getCenterX()));
-		SmartDashboard.putNumber("offset", drive.getOffset(target.getTopY()));
-		SmartDashboard.putNumber("Height", target.getHeight());
 		SmartDashboard.putBoolean("Limit Switch", hanger.limitEngaged());
 		SmartDashboard.putNumber("Setpoint",
 				Robot.drive.getYaw() + drive.pixelToDegree(target.getCenterX()) - drive.getOffset(target.getHeight()));
