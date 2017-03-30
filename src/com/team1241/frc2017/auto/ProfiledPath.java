@@ -10,24 +10,33 @@ import edu.wpi.first.wpilibj.command.Command;
  * @since 01-17-2017
  */
 public class ProfiledPath extends Command {
+	
+	private double[][] pointsRight;
+	private double[][] pointsLeft;
+	private int size;
 
 	private MotionProfile profileRight;
 	private MotionProfile profileLeft;
 	
     public ProfiledPath(double[][] points, int size) {
         requires(Robot.drive);
-        profileRight = new MotionProfile(Robot.drive.getRightMaster(), points, size);
-        profileLeft = new MotionProfile(Robot.drive.getLeftMaster(), points, size);
+        this.pointsRight = points;
+        this.pointsLeft = points;
+        this.size = size;
     }
     
     public ProfiledPath(double[][] pointsRight, int sizeRight, double[][] pointsLeft, int sizeLeft) {
         requires(Robot.drive);
-        profileRight = new MotionProfile(Robot.drive.getRightMaster(), pointsRight, sizeRight);
-        profileLeft = new MotionProfile(Robot.drive.getLeftMaster(), pointsLeft, sizeLeft);
+        this.pointsRight = pointsRight;
+        this.pointsLeft = pointsLeft;
+        this.size = sizeRight;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	profileRight = new MotionProfile(Robot.drive.getRightMaster(), pointsRight, size);
+        profileLeft = new MotionProfile(Robot.drive.getLeftMaster(), pointsLeft, size);
+        
     	profileRight.reset();
     	profileLeft.reset();
     	Robot.drive.resetEncoders();

@@ -44,6 +44,8 @@ public class Drivetrain extends Subsystem {
 
 	/** The drive PID controller. */
 	private PIDController drivePID;
+	private PIDController leftPID;
+	private PIDController rightPID;
 
 	/** The gyro PID conteroller. */
 	private PIDController gyroPID;
@@ -80,6 +82,7 @@ public class Drivetrain extends Subsystem {
 		leftMaster = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
 		leftMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		leftMaster.reverseSensor(true);
+		leftMaster.reverseOutput(false);
 
 		leftSlave = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		leftSlave.changeControlMode(TalonControlMode.Follower);
@@ -119,6 +122,9 @@ public class Drivetrain extends Subsystem {
 		// Initialize PID controllers
 		drivePID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
+		
+		leftPID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
+		rightPID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 
 		rightMaster.setProfile(0);
 		rightMaster.setPID(0.01, 0, 0);
@@ -162,26 +168,42 @@ public class Drivetrain extends Subsystem {
 		leftMaster.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
+	public void velocityMode() {
+		rightMaster.changeControlMode(TalonControlMode.Speed);
+		leftMaster.changeControlMode(TalonControlMode.Speed);
+	}
+
 	public void driveSetpoint(double setPoint, double speed, double setAngle, double tolerance) {
 		double output = drivePID.calcPID(setPoint, getAverageDistance(), tolerance);
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
 		SmartDashboard.putNumber("PID OUTPUT", angle);
-		runLeftDrive((-output - angle) * speed * 0.825);
+		runLeftDrive((-output - angle) * speed * 0.95);
 		runRightDrive((output - angle) * speed * 1);
+	}
+
+	public void driveVelocitySetpoint(double setPoint, double speed, double setAngle, double tolerance) {
+		velocityMode();
+		double leftOutput = leftPID.calcPID(setPoint, getLeftDriveEncoder(), tolerance);
+		double rightOutput = rightPID.calcPID(setPoint, getRightDriveEncoder(), tolerance);
+		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
+
+		runLeftDrive((-leftOutput - angle) * speed);
+		runRightDrive((rightOutput - angle) * speed);
 	}
 
 	public void turnDrive(double setAngle, double speed, double tolerance) {
 		double angle = gyroPID.calcPID(setAngle, getYaw(), tolerance);
+		double min = 0.15;
 
 		if (Math.abs(setAngle - getYaw()) < tolerance) {
 			runLeftDrive(0);
 			runRightDrive(0);
-		} else if (angle > -0.15 && angle < 0) {
-			runLeftDrive(0.15);
-			runRightDrive(0.15);
-		} else if (angle < 0.15 && angle > 0) {
-			runLeftDrive(-0.15);
-			runRightDrive(-0.15);
+		} else if (angle > -min && angle < 0) {
+			runLeftDrive(min);
+			runRightDrive(min);
+		} else if (angle < min && angle > 0) {
+			runLeftDrive(-min);
+			runRightDrive(-min);
 		} else {
 			runLeftDrive(-angle * speed);
 			runRightDrive(-angle * speed);
@@ -248,13 +270,21 @@ public class Drivetrain extends Subsystem {
 	public double getRightDriveEncoder() {
 		return rightMaster.getPosition() * ElectricalConstants.ROTATIONS_TO_INCHES;
 	}
-	
-	public double getLeftDriveRotations(){
+
+	public double getLeftDriveRotations() {
 		return leftMaster.getPosition();
 	}
-	
-	public double getRightDriveRotations(){
+
+	public double getRightDriveRotations() {
 		return rightMaster.getPosition();
+	}
+	
+	public double getLeftSpeed(){
+		return leftMaster.getSpeed();
+	}
+	
+	public double getRightSpeed(){
+		return rightMaster.getSpeed();
 	}
 
 	public double getAverageDistance() {

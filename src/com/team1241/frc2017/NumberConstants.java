@@ -45,7 +45,7 @@ public class NumberConstants {
     //************************** PID VALUES (CONVEYOR) *************************
     //**************************************************************************
 	
-	public static final double pConveyor 								= 0.00;
+	public static final double pConveyor 								= 0.000175;
 	public static final double iConveyor 								= 0.00;
 	public static final double dConveyor 								= 0.00;
 	

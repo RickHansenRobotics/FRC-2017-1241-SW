@@ -2,16 +2,19 @@
 package com.team1241.frc2017;
 
 import com.team1241.frc2017.auto.CenterGearCommand;
+import com.team1241.frc2017.auto.CenterGearShootCommandRed;
 import com.team1241.frc2017.auto.DriveCommand;
 import com.team1241.frc2017.auto.HopperAutoBlue;
 import com.team1241.frc2017.auto.LeftGearCommandBlue;
 import com.team1241.frc2017.auto.LeftGearCommandRed;
 import com.team1241.frc2017.auto.LeftGearShootCommandBlue;
 import com.team1241.frc2017.auto.NoAuto;
+import com.team1241.frc2017.auto.ProfiledPath;
 import com.team1241.frc2017.auto.RightGearCommandRed;
 import com.team1241.frc2017.auto.RightGearShootCommandRed;
 import com.team1241.frc2017.auto.ShootAuton;
 import com.team1241.frc2017.auto.TurnCommand;
+import com.team1241.frc2017.profiles.DriveStraightProfile;
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
 import com.team1241.frc2017.subsystems.Hanger;
@@ -92,9 +95,8 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 
 		autoChooser.addDefault("No Auton", new NoAuto());
-		// autoChooser.addObject("Drive Straight", new
-		// ProfiledPath(DriveStraightProfile.Points,
-		// DriveStraightProfile.kNumPoints));
+		autoChooser.addObject("Profile Path",
+				new ProfiledPath(DriveStraightProfile.Points, DriveStraightProfile.kNumPoints));
 		autoChooser.addObject("Drive Straight", new DriveCommand(72, 0.6, 0, 5));
 		autoChooser.addObject("Turn Command", new TurnCommand(90, 0.8, 5, 1));
 		autoChooser.addObject("Left Gear Command Red", new LeftGearCommandRed());
@@ -137,11 +139,14 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// autonomousCommand = (Command) autoChooser.getSelected();
 		//autonomousCommand = new CenterGearCommand();
-		 //autonomousCommand = new LeftGearShootCommandBlue();
-		//autonomousCommand = new TurnCommand(90, 0.8,5 ,1);
-		autonomousCommand = new LeftGearCommandBlue();
-		//autonomousCommand = new RightGearShootCommandRed();
-		//autonomousCommand = new HopperAutoBlue();
+		// autonomousCommand = new LeftGearShootCommandBlue();
+		// autonomousCommand = new TurnCommand(90, 0.8,5 ,1);
+		// autonomousCommand = new LeftGearCommandBlue();
+		// autonomousCommand = new RightGearShootCommandRed();
+		// autonomousCommand = new HopperAutoBlue();
+		//autonomousCommand = new DriveCommand(-80, 200, 0, 3);
+		//autonomousCommand = new ShootAuton();
+		autonomousCommand = new CenterGearShootCommandRed();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -162,7 +167,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		updateSmartDashboard();
+		data.writeData(drive.getYaw(), drive.getLeftDriveEncoder(), drive.getRightDriveEncoder(), 0);
+
+		// updateSmartDashboard();
 	}
 
 	public void teleopInit() {
@@ -172,6 +179,11 @@ public class Robot extends IterativeRobot {
 		powerC = pref.getDouble("Conveyor Power", 0.0);
 		p = pref.getDouble("Shooter pGain", 0.0);
 		drive.resetGyro();
+
+		data.close();
+		// if(Robot.oi.getToolBackButton())
+		// dataOutput.writeData(counter, drive.getLeftDriveEncoder(),
+		// drive.getRightDriveEncoder(), drive.getYaw());
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -202,6 +214,7 @@ public class Robot extends IterativeRobot {
 		 */
 		// Robot.intake.retractIntake();
 		// hopper.retractHopper();
+
 	}
 
 	/**
@@ -243,7 +256,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Limit Switch", hanger.limitEngaged());
 		SmartDashboard.putNumber("Setpoint",
 				Robot.drive.getYaw() + drive.pixelToDegree(target.getCenterX()) - drive.getOffset(target.getHeight()));
+		
+		SmartDashboard.putNumber("Left Speed", drive.getLeftSpeed());
+		SmartDashboard.putNumber("Right Speed", drive.getRightSpeed());
 
 		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
+
+		SmartDashboard.putString("Selected Auto", autoChooser.getSelected().toString());
 	}
 }

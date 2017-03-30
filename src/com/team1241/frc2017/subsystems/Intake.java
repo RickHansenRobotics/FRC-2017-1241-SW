@@ -32,8 +32,8 @@ public class Intake extends Subsystem {
 	}
 
 	public void setIntakeSpeed(double speed) {
-		mainIntakeRollers.set(-speed);
-		sideIntakeRollers.set(-speed);
+		mainIntakeRollers.set(speed);
+		sideIntakeRollers.set(speed);
 	}
 
 	// INTAKE PISTON COMMANDS

@@ -1,6 +1,9 @@
 package com.team1241.frc2017.commands;
 
 import com.team1241.frc2017.Robot;
+import com.team1241.frc2017.auto.AutoCloseSequence;
+import com.team1241.frc2017.auto.AutoOpenSequence;
+import com.team1241.frc2017.auto.IntakePistonCommand;
 import com.team1241.frc2017.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -41,10 +44,11 @@ public class IntakeCommand extends Command {
 		toggle.set(Robot.oi.getToolLeftBumper());
 
 		if (!Robot.hanger.hangStarted()) {
-			if (toggle.get())
+			if (toggle.get()) {
 				Robot.intake.extendIntake();
-			else
+			} else {
 				Robot.intake.retractIntake();
+			}
 		}
 	}
 

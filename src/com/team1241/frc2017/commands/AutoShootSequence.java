@@ -15,15 +15,10 @@ public class AutoShootSequence extends CommandGroup {
     public AutoShootSequence() {
     	
     	addSequential(new WaitCommand(0.75));
-    	addSequential(new AutoConveyorCommand(true,4));
+    	addSequential(new AutoConveyorCommand(2,3));
     	addSequential(new HopperPistonCommand(false));
     	addSequential(new WaitCommand(0.5));
     	addSequential(new HopperPistonCommand(true));
     	addSequential(new WaitCommand(3.5));
-    	addSequential(new AutoConveyorCommand(false,0.1));
-    	//BLUE
-    	//addSequential(new DriveCommand(-110, 0.8, -60, 3));
-    	//RED
-    	//addSequential(new DriveCommand(-110, 0.8, 60, 3));
     }
 }

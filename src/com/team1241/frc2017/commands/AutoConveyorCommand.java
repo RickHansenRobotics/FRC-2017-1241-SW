@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoConveyorCommand extends Command {
 
-	private boolean state;
+	private int state;
 	private double timeout;
 
-	public AutoConveyorCommand(boolean state, double timeout) {
+	public AutoConveyorCommand(int state, double timeout) {
 		this.state = state;
 		this.timeout = timeout;
 		requires(Robot.conveyor);
@@ -20,15 +20,23 @@ public class AutoConveyorCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		setTimeout(timeout);
+		if(timeout != -1)
+			setTimeout(timeout);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (state) {
+		if (state == 2) {
 			Robot.conveyor.agitatorFeeder(-0.5);
-			Robot.conveyor.agitatorHopper(0.5);
-			Robot.conveyor.setConveyorPower(-0.4);
+			Robot.conveyor.agitatorHopper(-0.9);
+			Robot.conveyor.setConveyorPower(0.48);
+		} 
+		else if(state == 1){
+			Robot.conveyor.agitatorFeeder(-0.5);
+			Robot.conveyor.agitatorHopper(0.6);
+			//reverseRPM.cancel();
+			//rpm.start();
+			Robot.conveyor.setConveyorPower(-1);
 		} else {
 			Robot.conveyor.agitatorFeeder(0);
 			Robot.conveyor.agitatorHopper(0);
@@ -38,7 +46,10 @@ public class AutoConveyorCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return isTimedOut();
+		if(timeout == -1)
+			return true;
+		else
+			return isTimedOut();
 	}
 
 	// Called once after isFinished returns true

@@ -15,17 +15,23 @@ public class DriveCommand extends Command {
 	private double angle;
 	private double timeOut;
 	private double tolerance;
+	private boolean velocity;
 
 	public DriveCommand(double setPoint, double speed, double angle, double timeOut) {
-		this(setPoint, speed, angle, timeOut, 1);
+		this(setPoint, speed, angle, timeOut, 1, false);
+	}
+	
+	public DriveCommand(double setPoint, double speed, double angle, double timeOut, boolean velocity) {
+		this(setPoint, speed, angle, timeOut, 1, velocity);
 	}
 
-    public DriveCommand(double setPoint, double speed, double angle, double timeOut, double tolerance) {
+    public DriveCommand(double setPoint, double speed, double angle, double timeOut, double tolerance, boolean velocity) {
     	this.distance = setPoint;
     	this.speed = speed;
     	this.angle = angle;
     	this.timeOut = timeOut;
     	this.tolerance = tolerance;
+    	this.velocity = velocity;
     	requires(Robot.drive);
     }
 
@@ -39,7 +45,13 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.driveSetpoint(distance, speed, angle, tolerance);
+    	//Robot.drive.driveSetpoint(distance, speed, angle, tolerance);
+    	if(velocity){
+	    	// Speed must be in RPM
+	    	Robot.drive.driveVelocitySetpoint(distance, speed, angle, tolerance);
+    	}
+    	else
+    		Robot.drive.driveSetpoint(distance, speed, angle, tolerance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -52,6 +64,7 @@ public class DriveCommand extends Command {
     	Robot.drive.runLeftDrive(0);
     	Robot.drive.runRightDrive(0);
     	Robot.drive.resetPID();
+    	Robot.drive.voltageMode();
     }
 
     // Called when another command which requires one or more of the same
@@ -60,5 +73,6 @@ public class DriveCommand extends Command {
     	Robot.drive.runLeftDrive(0);
 		Robot.drive.runRightDrive(0);
 		Robot.drive.resetPID();
+    	Robot.drive.voltageMode();
     }
 }
