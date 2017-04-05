@@ -9,9 +9,9 @@ public class RightGearCommandRed extends CommandGroup {
 
 	public RightGearCommandRed() {
 
-		addSequential(new DriveCommand(-92, 0.6, 0, 3));
-		addSequential(new TurnCommand(-11, 1, 3, 1));
-		addSequential(new DriveCommand(-34, 0.6, -57, 6));
+		addSequential(new DriveCommand(-97, 0.8, 0, 2.25));
+		addSequential(new TurnCommand(-57, 0.8, 1.25, 1));
+		addSequential(new DriveCommand(-27, 0.6, -56, 2));
 
 	}
 }

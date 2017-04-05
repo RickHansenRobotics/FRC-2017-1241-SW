@@ -104,7 +104,7 @@ public class Conveyor extends Subsystem {
 
 	// Function to control the Conveyor
 	public void setConveyorPower(double input) {
-		conveyorMaster.set(input);
+		conveyorMaster.set(-input);
 		conveyorSlave.set(-input);
 	}
 

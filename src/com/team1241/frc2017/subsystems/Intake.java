@@ -32,7 +32,7 @@ public class Intake extends Subsystem {
 	}
 
 	public void setIntakeSpeed(double speed) {
-		mainIntakeRollers.set(speed);
+		mainIntakeRollers.set(-speed);
 		sideIntakeRollers.set(speed);
 	}
 

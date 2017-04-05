@@ -2,6 +2,7 @@
 package com.team1241.frc2017;
 
 import com.team1241.frc2017.auto.CenterGearCommand;
+import com.team1241.frc2017.auto.CenterGearShootCommandBlue;
 import com.team1241.frc2017.auto.CenterGearShootCommandRed;
 import com.team1241.frc2017.auto.DriveCommand;
 import com.team1241.frc2017.auto.HopperAutoBlue;
@@ -106,6 +107,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Shoot Auto", new ShootAuton());
 		autoChooser.addObject("Left Gear Shoot Command Blue", new LeftGearShootCommandBlue());
 		autoChooser.addObject("Right Gear Shoot Command Red", new RightGearShootCommandRed());
+		autoChooser.addObject("Center Gear & Shoot RED", new CenterGearShootCommandRed());
+		autoChooser.addObject("Center Gear & Shoot BLUE", new CenterGearShootCommandBlue());
 
 		SmartDashboard.putData("Auto Mode(s)", autoChooser);
 
@@ -137,7 +140,7 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		// autonomousCommand = (Command) autoChooser.getSelected();
+		 autonomousCommand = (Command) autoChooser.getSelected();
 		//autonomousCommand = new CenterGearCommand();
 		// autonomousCommand = new LeftGearShootCommandBlue();
 		// autonomousCommand = new TurnCommand(90, 0.8,5 ,1);
@@ -146,7 +149,7 @@ public class Robot extends IterativeRobot {
 		// autonomousCommand = new HopperAutoBlue();
 		//autonomousCommand = new DriveCommand(-80, 200, 0, 3);
 		//autonomousCommand = new ShootAuton();
-		autonomousCommand = new CenterGearShootCommandRed();
+		//autonomousCommand = new CenterGearShootCommandRed();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -259,7 +262,6 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("Left Speed", drive.getLeftSpeed());
 		SmartDashboard.putNumber("Right Speed", drive.getRightSpeed());
-
 		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
 
 		SmartDashboard.putString("Selected Auto", autoChooser.getSelected().toString());
