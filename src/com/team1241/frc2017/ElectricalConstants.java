@@ -59,8 +59,8 @@ public class ElectricalConstants {
 	// ******************************* PISTONS ***********************************
 	// ***************************************************************************
 	
-    public static final int CLAW_PISTON_A 									= 3;
-    public static final int CLAW_PISTON_B  									= 4;
+    public static final int GEAR_PISTON_A 									= 3;
+    public static final int GEAR_PISTON_B  									= 4;
     
     public static final int INTAKE_PISTON_A									= 0;
     public static final int INTAKE_PISTON_B									= 7;
@@ -76,6 +76,7 @@ public class ElectricalConstants {
  	// ***************************************************************************
  	
  	public static final int OPTICAL_SENSOR_SHOOTER                          = 1;
+ 	public static final int OPTICAL_SENSOR_GEARMECH							= 2;
     
     //****************************************************************************
   	//************************ CONVEYOR ENCODER CONSTANTS ************************

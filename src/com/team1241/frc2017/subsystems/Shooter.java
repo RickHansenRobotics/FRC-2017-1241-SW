@@ -26,7 +26,7 @@ public class Shooter extends Subsystem {
 
 	Counter optical;
 
-	DoubleSolenoid claw;
+	
 
 	public PIDController shooterPID;
 
@@ -51,7 +51,7 @@ public class Shooter extends Subsystem {
 		optical.setUpDownCounterMode();
 		optical.setDistancePerPulse(1);
 
-		claw = new DoubleSolenoid(ElectricalConstants.CLAW_PISTON_A, ElectricalConstants.CLAW_PISTON_B);
+		
 
 		shooterPID = new PIDController(NumberConstants.pShooter, NumberConstants.iShooter, NumberConstants.dShooter);
 
@@ -103,14 +103,7 @@ public class Shooter extends Subsystem {
 		}
 	}
 
-	public void openClaw() {
-		claw.set(DoubleSolenoid.Value.kReverse);
-	}
-
-	// Function to control the Piston
-	public void closeClaw() {
-		claw.set(DoubleSolenoid.Value.kForward);
-	}
+	
 
 	public double getSlope() {
 		return kForward;

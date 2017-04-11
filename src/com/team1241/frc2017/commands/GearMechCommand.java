@@ -1,38 +1,36 @@
 package com.team1241.frc2017.commands;
 
-import com.team1241.frc2017.NumberConstants;
 import com.team1241.frc2017.Robot;
+import com.team1241.frc2017.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * @author Kaveesha Siribaddana
- * @since 15/01/17
+ *
  */
-public class ShooterCommand extends Command {
+public class GearMechCommand extends Command {
 
-	private SetRPM rpm;
+	ToggleBoolean toggle = new ToggleBoolean();
 
-	public ShooterCommand() {
-		requires(Robot.shooter);
+	public GearMechCommand() {
+		requires(Robot.gearMech);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		rpm = new SetRPM(Robot.rpm);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Robot.oi.getToolRightBumper()) {
-			rpm.start();
-			//Robot.shooter.setShooter(Robot.power);
-		
+
+		if (Robot.oi.getDriveLeftBumper()) {
+			Robot.gearMech.extendGearMech();
+		} else if (Robot.oi.getToolRightTrigger() && Robot.gearMech.getOptic()) {
+			Robot.gearMech.retractGearMech();
+		} else if (Robot.oi.getToolRightTrigger()) {
+			Robot.gearMech.extendGearMech();
 		} else {
-			rpm.cancel();
-			//Robot.shooter.setShooter(0);
-		
+			Robot.gearMech.retractGearMech();
 		}
 	}
 

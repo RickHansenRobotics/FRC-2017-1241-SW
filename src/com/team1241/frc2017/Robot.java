@@ -5,7 +5,6 @@ import com.team1241.frc2017.auto.CenterGearCommand;
 import com.team1241.frc2017.auto.CenterGearShootCommandBlue;
 import com.team1241.frc2017.auto.CenterGearShootCommandRed;
 import com.team1241.frc2017.auto.DriveCommand;
-import com.team1241.frc2017.auto.HopperAutoBlue;
 import com.team1241.frc2017.auto.LeftGearCommandBlue;
 import com.team1241.frc2017.auto.LeftGearCommandRed;
 import com.team1241.frc2017.auto.LeftGearShootCommandBlue;
@@ -18,6 +17,7 @@ import com.team1241.frc2017.auto.TurnCommand;
 import com.team1241.frc2017.profiles.DriveStraightProfile;
 import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
+import com.team1241.frc2017.subsystems.GearMech;
 import com.team1241.frc2017.subsystems.Hanger;
 import com.team1241.frc2017.subsystems.Hopper;
 import com.team1241.frc2017.subsystems.Intake;
@@ -52,6 +52,7 @@ public class Robot extends IterativeRobot {
 	public static Conveyor conveyor;
 	public static Hopper hopper;
 	public static Hanger hanger;
+	public static GearMech gearMech;
 	public static LEDstrips ledstrips;
 
 	Preferences pref;
@@ -88,6 +89,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		hopper = new Hopper();
 		hanger = new Hanger();
+		gearMech = new GearMech();
 		conveyor = new Conveyor();
 		ledstrips = new LEDstrips();
 
