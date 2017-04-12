@@ -12,7 +12,7 @@ public class ResetSensorsCommand extends InstantCommand {
     public ResetSensorsCommand() {
         super();
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.drive);
     }
 
     // Called once when the command executes

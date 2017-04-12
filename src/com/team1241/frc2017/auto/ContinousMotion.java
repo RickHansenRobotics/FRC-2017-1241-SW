@@ -13,6 +13,7 @@ public class ContinousMotion extends Command {
 	private double speed;
 	private double setPoint;
 	private double timeOut;
+	private double angle;
 
 	/**
 	 * Instantiates a new continous motion.
@@ -24,8 +25,9 @@ public class ContinousMotion extends Command {
 	 * @param timeOut
 	 *            The time out in seconds
 	 */
-	public ContinousMotion(double speed, double setPoint, double timeOut) {
+	public ContinousMotion(double speed, double angle, double setPoint, double timeOut) {
 		this.speed = speed;
+		this.angle = angle;
 		this.setPoint = setPoint;
 		this.timeOut = timeOut;
 	}
@@ -38,7 +40,7 @@ public class ContinousMotion extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.drive.driveAngle(0, speed);
+		Robot.drive.driveAngle(angle, speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

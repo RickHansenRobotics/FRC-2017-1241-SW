@@ -5,11 +5,13 @@ import com.team1241.frc2017.auto.CenterGearCommand;
 import com.team1241.frc2017.auto.CenterGearShootCommandBlue;
 import com.team1241.frc2017.auto.CenterGearShootCommandRed;
 import com.team1241.frc2017.auto.DriveCommand;
+import com.team1241.frc2017.auto.LeftGearCenterFieldCommandBlue;
 import com.team1241.frc2017.auto.LeftGearCommandBlue;
 import com.team1241.frc2017.auto.LeftGearCommandRed;
 import com.team1241.frc2017.auto.LeftGearShootCommandBlue;
 import com.team1241.frc2017.auto.NoAuto;
 import com.team1241.frc2017.auto.ProfiledPath;
+import com.team1241.frc2017.auto.RightGearCenterFieldCommandRed;
 import com.team1241.frc2017.auto.RightGearCommandRed;
 import com.team1241.frc2017.auto.RightGearShootCommandRed;
 import com.team1241.frc2017.auto.ShootAuton;
@@ -108,7 +110,9 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Center Gear Command", new CenterGearCommand());
 		autoChooser.addObject("Shoot Auto", new ShootAuton());
 		autoChooser.addObject("Left Gear Shoot Command Blue", new LeftGearShootCommandBlue());
+		autoChooser.addObject("Left Gear Center Field Command Blue", new LeftGearCenterFieldCommandBlue());
 		autoChooser.addObject("Right Gear Shoot Command Red", new RightGearShootCommandRed());
+		autoChooser.addObject("Right Gear Center Field Command Red", new RightGearCenterFieldCommandRed());
 		autoChooser.addObject("Center Gear & Shoot RED", new CenterGearShootCommandRed());
 		autoChooser.addObject("Center Gear & Shoot BLUE", new CenterGearShootCommandBlue());
 
@@ -264,9 +268,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder", drive.getRightDriveEncoder());
 		SmartDashboard.putNumber("Left Encoder", drive.getLeftDriveEncoder());
 		SmartDashboard.putBoolean("Limit Switch", hanger.limitEngaged());
-		SmartDashboard.putNumber("Setpoint",
-				Robot.drive.getYaw() + drive.pixelToDegree(target.getCenterX()) - drive.getOffset(target.getHeight()));
-		
 		SmartDashboard.putNumber("Left Speed", drive.getLeftSpeed());
 		SmartDashboard.putNumber("Right Speed", drive.getRightSpeed());
 		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
