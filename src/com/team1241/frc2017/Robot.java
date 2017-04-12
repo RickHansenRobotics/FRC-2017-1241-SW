@@ -122,12 +122,16 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
+		
+    LEDstrips.HopperSetState(false);
 
 	}
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateSmartDashboard();
+		//LEDstrips.HopperSetState(LedConstants.HOPPER_BALL);
+
 	}
 
 	/**
@@ -184,6 +188,7 @@ public class Robot extends IterativeRobot {
 		powerC = pref.getDouble("Conveyor Power", 0.0);
 		p = pref.getDouble("Shooter pGain", 0.0);
 		drive.resetGyro();
+		LEDstrips.HopperSetState(true);
 
 		data.close();
 		// if(Robot.oi.getToolBackButton())
@@ -265,7 +270,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Speed", drive.getLeftSpeed());
 		SmartDashboard.putNumber("Right Speed", drive.getRightSpeed());
 		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
-
+		SmartDashboard.putBoolean("Optical", gearMech.getOptic());
 		SmartDashboard.putString("Selected Auto", autoChooser.getSelected().toString());
 	}
 }

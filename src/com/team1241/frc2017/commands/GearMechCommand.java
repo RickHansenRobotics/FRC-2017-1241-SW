@@ -23,15 +23,23 @@ public class GearMechCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
-		if (Robot.oi.getDriveLeftBumper()) {
-			Robot.gearMech.extendGearMech();
-		} else if (Robot.oi.getToolRightTrigger() && Robot.gearMech.getOptic()) {
+		if (!Robot.gearMech.getOptic() && Robot.oi.getDriveLeftBumper()){
 			Robot.gearMech.retractGearMech();
-		} else if (Robot.oi.getToolRightTrigger()) {
+		} else if (Robot.oi.getDriveLeftBumper()) {
 			Robot.gearMech.extendGearMech();
 		} else {
 			Robot.gearMech.retractGearMech();
 		}
+		
+//		if (Robot.oi.getDriveLeftBumper()) {
+//			Robot.gearMech.extendGearMech();
+//		} else if (Robot.oi.getToolRightTrigger() && Robot.gearMech.getOptic()) {
+//			Robot.gearMech.retractGearMech();
+//		} else if (Robot.oi.getToolRightTrigger()) {
+//			Robot.gearMech.extendGearMech();
+//		} else {
+//			Robot.gearMech.retractGearMech();
+//		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

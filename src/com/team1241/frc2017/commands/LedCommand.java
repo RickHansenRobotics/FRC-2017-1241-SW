@@ -17,16 +17,18 @@ public class LedCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+//	LEDstrips.HopperSetState(LedConstants.HOPPER_GEAR);
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.getDriveAButton()){
-    		LEDstrips.HopperSetState(LedConstants.HOPPER_GEAR);
-    	}
-    	else if(Robot.oi.getDriveBButton()){
-    		LEDstrips.HopperSetState(LedConstants.HOPPER_BALL);
-    	}
+//    	if(Robot.oi.getDriveAButton()){
+//    		LEDstrips.HopperSetState(LedConstants.HOPPER_GEAR);
+//    	}
+//    	else if(Robot.oi.getDriveBButton()){
+//    		LEDstrips.HopperSetState(LedConstants.HOPPER_BALL);
+//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
