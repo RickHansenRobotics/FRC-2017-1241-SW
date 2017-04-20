@@ -16,7 +16,7 @@ public class CenterGearShootCommandRed extends CommandGroup {
     	addSequential(new DriveCommand(-24, 1, 0, 2));
     	addSequential(new AutoOpenSequence());
     	addParallel(new SetRPM(2775));
-    	addSequential(new DriveCommand(140, 1, -65, 2));
+    	addSequential(new DriveCommand(140, 1, -63, 2));
     	addSequential(new AutoShootSequence());
     }
 }

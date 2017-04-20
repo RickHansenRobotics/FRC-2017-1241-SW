@@ -17,18 +17,16 @@ public class LedCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//	LEDstrips.HopperSetState(LedConstants.HOPPER_GEAR);
-
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	if(Robot.oi.getDriveAButton()){
-//    		LEDstrips.HopperSetState(LedConstants.HOPPER_GEAR);
-//    	}
-//    	else if(Robot.oi.getDriveBButton()){
-//    		LEDstrips.HopperSetState(LedConstants.HOPPER_BALL);
-//    	}
+    	// LEDstrips.solid();	// sets solid blue
+    	// LEDstrips.gear();	// flash green 3 times then becomes solod
+    	
+    	// run solid when opto sensor detects no gear
+    	// run gear when opto sensor detects gear
+    	// running of diabled is already done in disabledInit()
     }
 
     // Make this return true when this Command no longer needs to run execute()

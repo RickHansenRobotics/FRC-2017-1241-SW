@@ -1,6 +1,7 @@
 package com.team1241.frc2017.commands;
 
 import com.team1241.frc2017.Robot;
+import com.team1241.frc2017.subsystems.LEDstrips;
 import com.team1241.frc2017.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,20 +24,29 @@ public class GearMechCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
-		if (!Robot.gearMech.getOptic() && Robot.oi.getDriveLeftBumper()){
-			Robot.gearMech.retractGearMech();
-		} else if (Robot.oi.getDriveLeftBumper()) {
+
+		if(Robot.oi.getDriveLeftBumper() || Robot.oi.getToolRightTrigger()){
 			Robot.gearMech.extendGearMech();
+		} else if(!Robot.oi.getDriveLeftBumper() && !Robot.oi.getToolRightTrigger()){
+			Robot.gearMech.retractGearMech();
 		} else {
 			Robot.gearMech.retractGearMech();
 		}
 		
+		if(!Robot.gearMech.getOptic()){
+			LEDstrips.gear();
+		} else{
+			LEDstrips.solid();
+		}
+		
 //		if (Robot.oi.getDriveLeftBumper()) {
 //			Robot.gearMech.extendGearMech();
-//		} else if (Robot.oi.getToolRightTrigger() && Robot.gearMech.getOptic()) {
+//		} else if (Robot.oi.getToolRightTrigger() && !Robot.gearMech.getOptic()) {
 //			Robot.gearMech.retractGearMech();
 //		} else if (Robot.oi.getToolRightTrigger()) {
 //			Robot.gearMech.extendGearMech();
+//		} else if(!Robot.oi.getDriveLeftBumper() && !Robot.oi.getToolRightTrigger()){
+//			Robot.gearMech.retractGearMech();
 //		} else {
 //			Robot.gearMech.retractGearMech();
 //		}

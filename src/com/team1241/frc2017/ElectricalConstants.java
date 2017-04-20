@@ -98,8 +98,12 @@ public class ElectricalConstants {
 	//**************************************************************************
     //**************************** LED PWM CONSTANTS ***************************
     //**************************************************************************
-	public static final int HOPPER_PWM_PIN 							= 9;
+	//public static final int HOPPER_PWM_PIN 							= 9;
 	//public static final int SHOOTER_PWM_PIN							= 9;
+	
+	public static final int BYTE_ONE_PIN 							= 8;	// connect this to third from top
+	public static final int BYTE_TWO_PIN							= 9;	// connect this to last from top
+	
 
 			
 	

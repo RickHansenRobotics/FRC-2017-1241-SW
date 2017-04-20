@@ -11,24 +11,35 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class LEDstrips extends Subsystem {
-	static DigitalOutput hopperLedPWM;
+	//static DigitalOutput hopperLedPWM;
+	static DigitalOutput byteOne;
+	static DigitalOutput byteTwo;
+	
 
 	
 	public LEDstrips() {
-		hopperLedPWM = new DigitalOutput(ElectricalConstants.HOPPER_PWM_PIN);
-	//	shooterLedPWM = new PWM(ElectricalConstants.SHOOTER_PWM_PIN);
-
-		//hopperLedPWM.setPeriodMultiplier(PeriodMultiplier.k1X);	
-	//	shooterLedPWM.setPeriodMultiplier(PeriodMultiplier.k1X);	
+		//hopperLedPWM = new DigitalOutput(ElectricalConstants.HOPPER_PWM_PIN);
+		byteOne = new DigitalOutput(ElectricalConstants.BYTE_ONE_PIN);
+		byteTwo = new DigitalOutput(ElectricalConstants.BYTE_TWO_PIN);
 	}
 	
-	public static void HopperSetState(boolean state) {
-		hopperLedPWM.set(state);
+	public static void setState(boolean byteOneState, boolean byteTwoState) {
+		//hopperLedPWM.set(state);
+		byteOne.set(byteOneState);
+		byteTwo.set(byteTwoState);
 	}
 	
-//	public void ShooterSetState(int state) {
-//		shooterLedPWM.setRaw(state);
-//	}
+	public static void disabled() {
+		setState(false, false);
+	}
+	
+	public static void solid() {
+		setState(false, true);
+	}
+	
+	public static void gear() {
+		setState(true, false);
+	}
 
     public void initDefaultCommand() {
     	setDefaultCommand(new LedCommand());
