@@ -21,8 +21,6 @@ import com.team1241.frc2017.subsystems.Conveyor;
 import com.team1241.frc2017.subsystems.Drivetrain;
 import com.team1241.frc2017.subsystems.GearMech;
 import com.team1241.frc2017.subsystems.Hanger;
-import com.team1241.frc2017.subsystems.Hopper;
-import com.team1241.frc2017.subsystems.Intake;
 import com.team1241.frc2017.subsystems.LEDstrips;
 import com.team1241.frc2017.subsystems.Shooter;
 import com.team1241.frc2017.utilities.DataOutput;
@@ -49,10 +47,8 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain drive;
-	public static Intake intake;
 	public static Shooter shooter;
 	public static Conveyor conveyor;
-	public static Hopper hopper;
 	public static Hanger hanger;
 	public static GearMech gearMech;
 	public static LEDstrips ledstrips;
@@ -87,9 +83,7 @@ public class Robot extends IterativeRobot {
 		pref = Preferences.getInstance();
 		oi = new OI();
 		drive = new Drivetrain();
-		intake = new Intake();
 		shooter = new Shooter();
-		hopper = new Hopper();
 		hanger = new Hanger();
 		gearMech = new GearMech();
 		conveyor = new Conveyor();
@@ -271,7 +265,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Speed", drive.getLeftSpeed());
 		SmartDashboard.putNumber("Right Speed", drive.getRightSpeed());
 		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
-		SmartDashboard.putBoolean("Optical", !gearMech.getOptic());
+		SmartDashboard.putBoolean("Optical", !gearMech.getBeamBrake());
 		SmartDashboard.putString("Selected Auto", autoChooser.getSelected().toString());
 	}
 }

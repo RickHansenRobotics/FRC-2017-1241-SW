@@ -12,27 +12,40 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearMech extends Subsystem {
 
-    DoubleSolenoid gearPiston;
+    DoubleSolenoid gearMechPiston;
+    DoubleSolenoid feederPiston;
     
     private boolean contains = false;
 	private boolean mechState = false;
+	
+	 private boolean feederState = false;
     
-    private DigitalInput optical;
+    private DigitalInput beamBrake;
     
     public GearMech(){
-    	gearPiston = new DoubleSolenoid(ElectricalConstants.GEAR_PISTON_A,ElectricalConstants.GEAR_PISTON_B);
-    	
-    	optical = new DigitalInput(ElectricalConstants.OPTICAL_SENSOR_GEARMECH);
+    	gearMechPiston = new DoubleSolenoid(ElectricalConstants.GEAR_PISTON_A,ElectricalConstants.GEAR_PISTON_B);
+    	feederPiston = new DoubleSolenoid(ElectricalConstants.FEEDER_PISTON_A,ElectricalConstants.FEEDER_PISTON_B);
+
+    	beamBrake = new DigitalInput(ElectricalConstants.BEAM_BRAKE_GEARMECH);
     }
     
     public void extendGearMech(){
-    	gearPiston.set(DoubleSolenoid.Value.kForward);
+    	gearMechPiston.set(DoubleSolenoid.Value.kForward);
     	mechState = true;
     }
     
     public void retractGearMech(){
-    	gearPiston.set(DoubleSolenoid.Value.kReverse);
+    	gearMechPiston.set(DoubleSolenoid.Value.kReverse);
     	mechState = false;
+    }
+    public void extendFeeder(){
+    	feederPiston.set(DoubleSolenoid.Value.kForward);
+    	feederState = true;
+    }
+    
+    public void retractFeeder(){
+    	feederPiston.set(DoubleSolenoid.Value.kReverse);
+    	feederState = false;
     }
     
     public void setContains(boolean state) {
@@ -47,8 +60,8 @@ public class GearMech extends Subsystem {
 		return mechState;
 	}
     
-    public boolean getOptic(){
-    	return optical.get();
+    public boolean getBeamBrake(){
+    	return beamBrake.get();
     }
 
     public void initDefaultCommand() {

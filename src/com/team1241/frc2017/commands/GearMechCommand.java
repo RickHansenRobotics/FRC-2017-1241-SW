@@ -25,15 +25,15 @@ public class GearMechCommand extends Command {
 	protected void execute() {
 
 
-		if(Robot.oi.getDriveLeftBumper() || Robot.oi.getToolRightTrigger()){
+		if(Robot.oi.getToolRightTrigger() && Robot.gearMech.getBeamBrake()){
 			Robot.gearMech.extendGearMech();
-		} else if(!Robot.oi.getDriveLeftBumper() && !Robot.oi.getToolRightTrigger()){
+		} else if(Robot.oi.getToolRightTrigger()){
 			Robot.gearMech.retractGearMech();
 		} else {
 			Robot.gearMech.retractGearMech();
 		}
 		
-		if(!Robot.gearMech.getOptic()){
+		if(!Robot.gearMech.getBeamBrake()){
 			LEDstrips.gear();
 		} else{
 			LEDstrips.solid();
