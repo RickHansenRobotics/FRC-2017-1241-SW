@@ -15,7 +15,6 @@ public class LeftGearShootCommandBlue extends CommandGroup {
 		addSequential(new TurnCommand(57, 0.8, 1.25, 1));
 		addSequential(new DriveCommand(-34, 0.6, 56, 3));
 
-		addParallel(new AutoOpenSequence());
 		addSequential(new DriveCommand(119, 0.8, 42, 1.75));
 		addParallel(new SetRPM(2775));
 		addSequential(new AutoShootSequence());

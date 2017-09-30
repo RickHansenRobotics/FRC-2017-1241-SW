@@ -15,7 +15,6 @@ public class RightGearShootCommandRed extends CommandGroup {
 		addSequential(new TurnCommand(-57, 0.8, 1.25, 1));
 		addSequential(new DriveCommand(-36, 0.6, -58, 3));
 
-		addParallel(new AutoOpenSequence());
 		addSequential(new DriveCommand(119, 0.8, -40, 1.75));
 		addParallel(new SetRPM(2775));
 		addSequential(new AutoShootSequence());

@@ -20,8 +20,7 @@ public class Conveyor extends Subsystem {
 
 	// Declaring the different Victors/motors being used in the Conveyor class
 	// e.g. agitator and conveyor.
-	CANTalon agitatorFeeder;
-	CANTalon agitatorHopper;
+	
 
 	CANTalon conveyorMaster;
 	CANTalon conveyorSlave;
@@ -47,8 +46,7 @@ public class Conveyor extends Subsystem {
 	public Conveyor() {
 
 		// Initializing the victors and connecting it to the physical motors.
-		agitatorFeeder = new CANTalon(ElectricalConstants.AGITATOR_MOTOR);
-		agitatorHopper = new CANTalon(ElectricalConstants.AGITATOR_HOPPER);
+		
 
 		conveyorMaster = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR1);
 		conveyorMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
@@ -93,14 +91,6 @@ public class Conveyor extends Subsystem {
 		setDefaultCommand(new ConveyorCommand());
 	}
 
-	// Function to control the agitator.
-	public void agitatorFeeder(double input) {
-		agitatorFeeder.set(input);
-	}
-
-	public void agitatorHopper(double input) {
-		agitatorHopper.set(-input);
-	}
 
 	// Function to control the Conveyor
 	public void setConveyorPower(double input) {
