@@ -267,5 +267,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
 		SmartDashboard.putBoolean("Optical", !gearMech.getBeamBrake());
 		SmartDashboard.putString("Selected Auto", autoChooser.getSelected().toString());
+		
+		//Beam Brake
+		SmartDashboard.putBoolean("BeamBrake", gearMech.getBeamBrake());
 	}
 }
