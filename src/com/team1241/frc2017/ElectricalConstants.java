@@ -73,7 +73,10 @@ public class ElectricalConstants {
  	// ***************************************************************************
  	
  	public static final int OPTICAL_SENSOR_SHOOTER                          = 1;
+<<<<<<< HEAD
  	public static final int OPTICAL_SENSOR_GEARMECH                         = 2;
+=======
+>>>>>>> refs/remotes/origin/master
  	
  	// ***************************************************************************
   	// *********************** BEAM BRAKE [DIGITAL] **************************

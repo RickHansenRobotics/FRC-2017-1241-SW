@@ -26,10 +26,17 @@ public class GearMechCommand extends Command {
 		
 		toggle.set(Robot.oi.getToolRightTrigger());
 
+<<<<<<< HEAD
 		//CLAW
 		if(toggle.get() && Robot.gearMech.getBeamBrake()){
 			Robot.gearMech.extendGearMech(); //open claw
+=======
+
+		if(toggle.get() && Robot.gearMech.getBeamBrake()){
+			Robot.gearMech.extendGearMech();
+>>>>>>> refs/remotes/origin/master
 		} else {
+<<<<<<< HEAD
 			Robot.gearMech.retractGearMech(); //close claw
 		} 
 		
@@ -39,11 +46,25 @@ public class GearMechCommand extends Command {
 		}
 		else{
 			Robot.gearMech.extendFeeder(); //close feeder
+=======
+			Robot.gearMech.retractGearMech();
+		} 
+		if(Robot.oi.getToolLeftTrigger()){
+			Robot.gearMech.extendFeeder();
+		}
+		else{
+			Robot.gearMech.retractFeeder();
+>>>>>>> refs/remotes/origin/master
 		}
 		
+<<<<<<< HEAD
 		//SIGNAL LEDs
 		if(!Robot.gearMech.getOptic()){
 			LEDstrips.solidBlue();
+=======
+		if(!Robot.gearMech.getBeamBrake()){
+			LEDstrips.gear();
+>>>>>>> refs/remotes/origin/master
 		} else{
 			LEDstrips.solidGreen();
 		}

@@ -21,14 +21,20 @@ public class GearMech extends Subsystem {
 	 private boolean feederState = false;
     
     private DigitalInput beamBrake;
+<<<<<<< HEAD
     private DigitalInput optical;
+=======
+>>>>>>> refs/remotes/origin/master
     
     public GearMech(){
     	gearMechPiston = new DoubleSolenoid(ElectricalConstants.GEAR_PISTON_A,ElectricalConstants.GEAR_PISTON_B);
     	feederPiston = new DoubleSolenoid(ElectricalConstants.FEEDER_PISTON_A,ElectricalConstants.FEEDER_PISTON_B);
 
     	beamBrake = new DigitalInput(ElectricalConstants.BEAM_BRAKE_GEARMECH);
+<<<<<<< HEAD
     	optical = new DigitalInput(ElectricalConstants.OPTICAL_SENSOR_GEARMECH);
+=======
+>>>>>>> refs/remotes/origin/master
     }
     
     public void extendGearMech(){

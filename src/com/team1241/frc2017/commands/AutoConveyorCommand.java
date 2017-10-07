@@ -27,21 +27,18 @@ public class AutoConveyorCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (state == 2) {
-			Robot.conveyor.agitatorFeeder(-0.9);
-			Robot.conveyor.agitatorHopper(-0.9);
+			
 			//rpm.cancel();
 			//reverseRPM.start();
 			Robot.conveyor.setConveyorPower(0.45);
 		} 
 		else if(state == 1){
-			Robot.conveyor.agitatorFeeder(-0.5);
-			Robot.conveyor.agitatorHopper(0.3);
+			
 			//reverseRPM.cancel();
 			//rpm.start();
 			Robot.conveyor.setConveyorPower(-1);
 		} else {
-			Robot.conveyor.agitatorFeeder(0);
-			Robot.conveyor.agitatorHopper(0);
+			
 			Robot.conveyor.setConveyorPower(0);
 		}
 	}
