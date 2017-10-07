@@ -11,12 +11,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CenterGearShootCommandRed extends CommandGroup {
 
     public CenterGearShootCommandRed() {
+    	
+    	// Drive to peg
     	addSequential(new DriveCommand(-67, 0.8, 0, 2));
     	addSequential(new WaitCommand(1));
     	addSequential(new DriveCommand(-24, 1, 0, 2));
+    	
+    	// Ready to shoot
     	addSequential(new AutoOpenSequence());
     	addParallel(new SetRPM(2775));
-    	addSequential(new DriveCommand(140, 1, -63, 2));
+    	addSequential(new DriveCommand(150, 1, -63, 2));
     	addSequential(new AutoShootSequence());
     }
 }

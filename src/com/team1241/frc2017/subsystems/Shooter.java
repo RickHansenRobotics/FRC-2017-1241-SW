@@ -8,8 +8,6 @@ import com.team1241.frc2017.pid.PIDController;
 import com.team1241.frc2017.utilities.LineRegression;
 
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,13 +18,8 @@ public class Shooter extends Subsystem {
 
 	CANTalon rightMotor;
 	CANTalon leftMotor;
-	
-	//Talon rightMotor;
-	//Talon leftMotor;
 
 	Counter optical;
-
-	
 
 	public PIDController shooterPID;
 
@@ -40,9 +33,7 @@ public class Shooter extends Subsystem {
 	double prev = 0;
 
 	public Shooter() {
-		//rightMotor = new Talon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
-		//leftMotor = new Talon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
-		
+
 		rightMotor = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
 		leftMotor = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
 
@@ -50,8 +41,6 @@ public class Shooter extends Subsystem {
 		optical.setUpSource(ElectricalConstants.OPTICAL_SENSOR_SHOOTER);
 		optical.setUpDownCounterMode();
 		optical.setDistancePerPulse(1);
-
-		
 
 		shooterPID = new PIDController(NumberConstants.pShooter, NumberConstants.iShooter, NumberConstants.dShooter);
 
@@ -92,18 +81,16 @@ public class Shooter extends Subsystem {
 	}
 
 	public double getRPM(double setRPM) {
-		// If rpm is greater than the previous by at most 1000 AND the rpm is greater
-		// than the setRPM, then return the previous rpm
+		// If rpm is greater than the previous by at most 1000 AND the rpm is
+		// greater than the setRPM, then return the previous rpm
 		// Else return the current rpm
-		if (optical.getRate()*60 > (prev + 1000) && optical.getRate()*60 > (setRPM+500)) {
+		if (optical.getRate() * 60 > (prev + 1000) && optical.getRate() * 60 > (setRPM + 500)) {
 			return prev;
 		} else {
 			prev = optical.getRate() * 60;
 			return prev;
 		}
 	}
-
-	
 
 	public double getSlope() {
 		return kForward;
@@ -118,8 +105,8 @@ public class Shooter extends Subsystem {
 	public void resetPID() {
 		shooterPID.resetPID();
 	}
-	
-	public void changeGains(double p, double i, double d){
+
+	public void changeGains(double p, double i, double d) {
 		shooterPID.changePIDGains(p, i, d);
 	}
 }

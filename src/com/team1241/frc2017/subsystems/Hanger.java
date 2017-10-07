@@ -6,6 +6,7 @@ import com.team1241.frc2017.commands.HangerCommand;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Hanger extends Subsystem {
 
 	VictorSP hangMotorLeft;
-	VictorSP hangMotorRight;
+	Talon hangMotorRight;
 
 	DoubleSolenoid stabilizerPiston;
 	boolean wasPressed = false;
@@ -25,7 +26,7 @@ public class Hanger extends Subsystem {
 
 	public Hanger() {
 		hangMotorLeft = new VictorSP(ElectricalConstants.LEFT_HANG_MOTOR);
-		hangMotorRight = new VictorSP(ElectricalConstants.RIGHT_HANG_MOTOR);
+		hangMotorRight = new Talon(ElectricalConstants.RIGHT_HANG_MOTOR);
 		
 		stabilizerPiston = new DoubleSolenoid(ElectricalConstants.STABILIZER_PISTON_A,
 											  ElectricalConstants.STABILIZER_PISTON_B);

@@ -33,12 +33,16 @@ public class LEDstrips extends Subsystem {
 		setState(false, false);
 	}
 	
-	public static void solid() {
+	public static void solidGreen() {
 		setState(false, true);
 	}
 	
-	public static void gear() {
+	public static void gold() {
 		setState(true, false);
+	}
+	
+	public static void solidBlue(){
+		setState(true,true);
 	}
 
     public void initDefaultCommand() {

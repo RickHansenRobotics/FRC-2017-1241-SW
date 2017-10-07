@@ -34,6 +34,17 @@ public class TankDrive extends Command {
 			Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY());
 			Robot.drive.runRightDrive(-Robot.oi.getDriveRightY());
 		}
+		
+		/*if(Robot.oi.getDriveLeftY()<0 && Robot.oi.getDriveRightY()>0){
+			Robot.drive.setLeftRampRate(160);
+			Robot.drive.setRightRampRate(160);			
+		} else if(Robot.oi.getDriveLeftY()>0 && Robot.oi.getDriveRightY()<0){
+			Robot.drive.setLeftRampRate(160);
+			Robot.drive.setRightRampRate(160);			
+		} else {
+			Robot.drive.setLeftRampRate(70);
+			Robot.drive.setRightRampRate(70);	
+		}*/
 
 	}
 

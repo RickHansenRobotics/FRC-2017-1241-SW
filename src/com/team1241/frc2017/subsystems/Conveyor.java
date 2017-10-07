@@ -23,8 +23,7 @@ public class Conveyor extends Subsystem {
 	CANTalon agitatorFeeder;
 	CANTalon agitatorHopper;
 
-	CANTalon conveyorMaster;
-	CANTalon conveyorSlave;
+	CANTalon conveyorMotor;
 
 	// Talon conveyor1;
 	// Talon conveyor2;
@@ -50,14 +49,9 @@ public class Conveyor extends Subsystem {
 		agitatorFeeder = new CANTalon(ElectricalConstants.AGITATOR_MOTOR);
 		agitatorHopper = new CANTalon(ElectricalConstants.AGITATOR_HOPPER);
 
-		conveyorMaster = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR1);
-		conveyorMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		conveyorMaster.reverseSensor(false);
-
-		conveyorSlave = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR2);
-
-		// conveyor1 = new Talon(ElectricalConstants.CONVEYOR_MOTOR1);
-		// conveyor2 = new Talon(ElectricalConstants.CONVEYOR_MOTOR2);
+		conveyorMotor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR1);
+		conveyorMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		conveyorMotor.reverseSensor(false);
 
 		// Initializing the piston and connecting it to the physical pneumatic
 		// piston.
@@ -73,11 +67,11 @@ public class Conveyor extends Subsystem {
 		bForward = calcline.getIntercept(); // Calculating The Point of
 											// Intersection.
 
-		FeedbackDeviceStatus conveyorMasterStatus = conveyorMaster
+		FeedbackDeviceStatus conveyorMasterStatus = conveyorMotor
 				.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
-		FeedbackDeviceStatus conveyorSlaveStatus = conveyorMaster
+		FeedbackDeviceStatus conveyorSlaveStatus = conveyorMotor
 				.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
-		
+
 		switch (conveyorMasterStatus) {
 		case FeedbackStatusPresent:
 			conveyorEncoderConnected = true;
@@ -104,26 +98,26 @@ public class Conveyor extends Subsystem {
 
 	// Function to control the Conveyor
 	public void setConveyorPower(double input) {
-		conveyorMaster.set(-input);
-		conveyorSlave.set(-input);
+		conveyorMotor.set(-input);
+
 	}
 
 	// Function to control the Piston
 
 	// Function to get the distance value from the encoder.
 	public double getConveyorEncoder() {
-		return conveyorMaster.getPosition();
+		return conveyorMotor.getPosition();
 	}
 
 	// Function to get the feed rate of the conveyor from the encoder.
 	public double getConveyorSpeed() {
-		return conveyorMaster.getSpeed();
+		return conveyorMotor.getSpeed();
 	}
 
 	// Function to reset the encoder on the conveyor.
 	public void resetConveyorEncoder() {
-		conveyorMaster.setPosition(0);
-		conveyorSlave.setPosition(0);
+		conveyorMotor.setPosition(0);
+
 	}
 
 	// Function to set and control or call the RPM of the conveyor.
@@ -131,8 +125,8 @@ public class Conveyor extends Subsystem {
 		double output = conveyorPID.calcPID(RPM, getConveyorSpeed(), 50);
 		setConveyorPower(RPM * kForward + bForward + output);
 	}
-	
-	public void resetPID(){
+
+	public void resetPID() {
 		conveyorPID.resetPID();
 	}
 

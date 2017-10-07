@@ -83,6 +83,7 @@ public class Drivetrain extends Subsystem {
 		leftMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		leftMaster.reverseSensor(true);
 		leftMaster.reverseOutput(false);
+		// leftMaster.setVoltageRampRate(30);
 
 		leftSlave = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		leftSlave.changeControlMode(TalonControlMode.Follower);
@@ -91,6 +92,7 @@ public class Drivetrain extends Subsystem {
 		rightMaster = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
 		rightMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		rightMaster.reverseSensor(false);
+		// rightMaster.setVoltageRampRate(30);
 
 		rightSlave = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
 		rightSlave.changeControlMode(TalonControlMode.Follower);
@@ -122,7 +124,7 @@ public class Drivetrain extends Subsystem {
 		// Initialize PID controllers
 		drivePID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		gyroPID = new PIDController(NumberConstants.pGyro, NumberConstants.iGyro, NumberConstants.dGyro);
-		
+
 		leftPID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 		rightPID = new PIDController(NumberConstants.pDrive, NumberConstants.iDrive, NumberConstants.dDrive);
 
@@ -171,6 +173,14 @@ public class Drivetrain extends Subsystem {
 	public void velocityMode() {
 		rightMaster.changeControlMode(TalonControlMode.Speed);
 		leftMaster.changeControlMode(TalonControlMode.Speed);
+	}
+
+	public void setLeftRampRate(double rampRate) {
+		leftMaster.setVoltageRampRate(rampRate);
+	}
+
+	public void setRightRampRate(double rampRate) {
+		rightMaster.setVoltageRampRate(rampRate);
 	}
 
 	public void driveSetpoint(double setPoint, double speed, double setAngle, double tolerance) {
@@ -278,12 +288,12 @@ public class Drivetrain extends Subsystem {
 	public double getRightDriveRotations() {
 		return rightMaster.getPosition();
 	}
-	
-	public double getLeftSpeed(){
+
+	public double getLeftSpeed() {
 		return leftMaster.getSpeed();
 	}
-	
-	public double getRightSpeed(){
+
+	public double getRightSpeed() {
 		return rightMaster.getSpeed();
 	}
 

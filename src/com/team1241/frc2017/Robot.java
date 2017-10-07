@@ -6,12 +6,15 @@ import com.team1241.frc2017.auto.CenterGearShootCommandBlue;
 import com.team1241.frc2017.auto.CenterGearShootCommandRed;
 import com.team1241.frc2017.auto.DriveCommand;
 import com.team1241.frc2017.auto.LeftGearCenterFieldCommandBlue;
+import com.team1241.frc2017.auto.LeftGearCenterFieldRed;
 import com.team1241.frc2017.auto.LeftGearCommandBlue;
 import com.team1241.frc2017.auto.LeftGearCommandRed;
 import com.team1241.frc2017.auto.LeftGearShootCommandBlue;
 import com.team1241.frc2017.auto.NoAuto;
 import com.team1241.frc2017.auto.ProfiledPath;
+import com.team1241.frc2017.auto.RightGearCenterFieldBlue;
 import com.team1241.frc2017.auto.RightGearCenterFieldCommandRed;
+import com.team1241.frc2017.auto.RightGearCommandBlue;
 import com.team1241.frc2017.auto.RightGearCommandRed;
 import com.team1241.frc2017.auto.RightGearShootCommandRed;
 import com.team1241.frc2017.auto.ShootAuton;
@@ -49,7 +52,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain drive;
-	public static Intake intake;
+	//public static Intake intake;
 	public static Shooter shooter;
 	public static Conveyor conveyor;
 	public static Hopper hopper;
@@ -87,7 +90,7 @@ public class Robot extends IterativeRobot {
 		pref = Preferences.getInstance();
 		oi = new OI();
 		drive = new Drivetrain();
-		intake = new Intake();
+		//intake = new Intake();
 		shooter = new Shooter();
 		hopper = new Hopper();
 		hanger = new Hanger();
@@ -115,8 +118,12 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Right Gear Center Field Command Red", new RightGearCenterFieldCommandRed());
 		autoChooser.addObject("Center Gear & Shoot RED", new CenterGearShootCommandRed());
 		autoChooser.addObject("Center Gear & Shoot BLUE", new CenterGearShootCommandBlue());
+		autoChooser.addObject("Right Gear Command Blue", new RightGearCommandBlue());
+		autoChooser.addObject("Right Gear Center Field Blue", new RightGearCenterFieldBlue());
+		autoChooser.addObject("Left Gear Center Field Red", new LeftGearCenterFieldRed());
+		
 
-		SmartDashboard.putData("Auto Mode(s)", autoChooser);
+		SmartDashboard.putData("Auto Modes", autoChooser);
 	}
 
 	/**
@@ -148,22 +155,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		 autonomousCommand = (Command) autoChooser.getSelected();
-		//autonomousCommand = new CenterGearCommand();
-		// autonomousCommand = new LeftGearShootCommandBlue();
-		// autonomousCommand = new TurnCommand(90, 0.8,5 ,1);
-		// autonomousCommand = new LeftGearCommandBlue();
-		// autonomousCommand = new RightGearShootCommandRed();
-		// autonomousCommand = new HopperAutoBlue();
-		//autonomousCommand = new DriveCommand(-80, 200, 0, 3);
-		//autonomousCommand = new ShootAuton();
-		//autonomousCommand = new CenterGearShootCommandRed();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		 LEDstrips.gold();
+	
 		drive.resetEncoders();
 		drive.resetGyro();
 
@@ -190,7 +183,7 @@ public class Robot extends IterativeRobot {
 		p = pref.getDouble("Shooter pGain", 0.0);
 		drive.resetGyro();
 		
-		LEDstrips.solid();
+		LEDstrips.solidGreen();
 		//LEDstrips.gear();
 
 
@@ -271,7 +264,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Speed", drive.getLeftSpeed());
 		SmartDashboard.putNumber("Right Speed", drive.getRightSpeed());
 		SmartDashboard.putNumber("Conveyor Speed", conveyor.getConveyorSpeed());
-		SmartDashboard.putBoolean("Optical", !gearMech.getOptic());
+		//SmartDashboard.putBoolean("Optical", !gearMech.getOptic());
 		SmartDashboard.putString("Selected Auto", autoChooser.getSelected().toString());
+	
+		SmartDashboard.putBoolean("MechState", gearMech.getBeamBrake());
+		SmartDashboard.putBoolean("Claw State", gearMech.getMechState());
 	}
 }

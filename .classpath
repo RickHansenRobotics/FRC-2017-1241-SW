@@ -10,5 +10,7 @@
 	<classpathentry kind="lib" path="C:/Users/gaurd/wpilib/user/java/lib/CTRLib.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Lehman/wpilib/user/java/lib/navx_frc.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/RIOdroid.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/JSON.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,6 +1,5 @@
 package com.team1241.frc2017.subsystems;
 
-import com.team1241.frc2017.ElectricalConstants;
 import com.team1241.frc2017.commands.HopperCommand;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -16,7 +15,7 @@ public class Hopper extends Subsystem {
 
 	public Hopper() {
 
-		hopper = new DoubleSolenoid(ElectricalConstants.HOPPER_PISTON_A, ElectricalConstants.HOPPER_PISTON_B);
+		//hopper = new DoubleSolenoid(ElectricalConstants.HOPPER_PISTON_A, ElectricalConstants.HOPPER_PISTON_B);
 
 	}
 

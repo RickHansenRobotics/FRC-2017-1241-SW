@@ -14,16 +14,16 @@ public class AutoIntakeCommand extends InstantCommand {
     public AutoIntakeCommand(boolean state) {
         super();
         this.state = state;
-        requires(Robot.intake);
+        //requires(Robot.intake);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	if(state){
-    		Robot.intake.setIntakeSpeed(1);
-    	}
-    	else
-    		Robot.intake.setIntakeSpeed(0);
-    }
+//    	if(state){
+//    		Robot.intake.setIntakeSpeed(1);
+//    	}
+//    	else
+//    		Robot.intake.setIntakeSpeed(0);
+//    }
 
-}
+    }}

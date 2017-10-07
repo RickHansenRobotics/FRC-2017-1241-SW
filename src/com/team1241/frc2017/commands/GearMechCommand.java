@@ -23,20 +23,29 @@ public class GearMechCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		
+		toggle.set(Robot.oi.getToolRightTrigger());
 
-
-		if(Robot.oi.getDriveLeftBumper() || Robot.oi.getToolRightTrigger()){
-			Robot.gearMech.extendGearMech();
-		} else if(!Robot.oi.getDriveLeftBumper() && !Robot.oi.getToolRightTrigger()){
-			Robot.gearMech.retractGearMech();
+		//CLAW
+		if(toggle.get() && Robot.gearMech.getBeamBrake()){
+			Robot.gearMech.extendGearMech(); //open claw
 		} else {
-			Robot.gearMech.retractGearMech();
+			Robot.gearMech.retractGearMech(); //close claw
+		} 
+		
+		//FEEDER
+		if(Robot.oi.getToolLeftTrigger()){
+			Robot.gearMech.retractFeeder(); //open feeder
+		}
+		else{
+			Robot.gearMech.extendFeeder(); //close feeder
 		}
 		
+		//SIGNAL LEDs
 		if(!Robot.gearMech.getOptic()){
-			LEDstrips.gear();
+			LEDstrips.solidBlue();
 		} else{
-			LEDstrips.solid();
+			LEDstrips.solidGreen();
 		}
 		
 //		if (Robot.oi.getDriveLeftBumper()) {

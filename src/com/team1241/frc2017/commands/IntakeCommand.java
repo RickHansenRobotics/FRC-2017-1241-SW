@@ -1,9 +1,6 @@
 package com.team1241.frc2017.commands;
 
 import com.team1241.frc2017.Robot;
-import com.team1241.frc2017.auto.AutoCloseSequence;
-import com.team1241.frc2017.auto.AutoOpenSequence;
-import com.team1241.frc2017.auto.IntakePistonCommand;
 import com.team1241.frc2017.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,7 +14,7 @@ public class IntakeCommand extends Command {
 	ToggleBoolean toggle = new ToggleBoolean();
 
 	public IntakeCommand() {
-		requires(Robot.intake);
+		//requires(Robot.intake);
 	}
 
 	// Called just before this Command runs the first time
@@ -29,27 +26,27 @@ public class IntakeCommand extends Command {
 
 		// Robot.intake.setIntakeSpeed(Robot.oi.getToolLeftY());
 
-		if (Robot.oi.getToolXButton()) {
-			Robot.intake.setIntakeSpeed(1);
-		} else if (Robot.oi.getToolAButton()) {
-
-			Robot.intake.setIntakeSpeed(1);
-
-		} else if (Robot.oi.getToolBButton()) {
-			Robot.intake.setIntakeSpeed(-0.7);
-		} else {
-			Robot.intake.setIntakeSpeed(0);
-		}
-
-		toggle.set(Robot.oi.getToolLeftBumper());
-
-		if (!Robot.hanger.hangStarted()) {
-			if (toggle.get()) {
-				Robot.intake.extendIntake();
-			} else {
-				Robot.intake.retractIntake();
-			}
-		}
+//		if (Robot.oi.getToolXButton()) {
+//			Robot.intake.setIntakeSpeed(1);
+//		} else if (Robot.oi.getToolAButton()) {
+//
+//			Robot.intake.setIntakeSpeed(1);
+//
+//		} else if (Robot.oi.getToolBButton()) {
+//			Robot.intake.setIntakeSpeed(-0.7);
+//		} else {
+//			Robot.intake.setIntakeSpeed(0);
+//		}
+//
+//		toggle.set(Robot.oi.getToolLeftBumper());
+//
+//		if (!Robot.hanger.hangStarted()) {
+//			if (toggle.get()) {
+//				Robot.intake.extendIntake();
+//			} else {
+//				Robot.intake.retractIntake();
+//			}
+//		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

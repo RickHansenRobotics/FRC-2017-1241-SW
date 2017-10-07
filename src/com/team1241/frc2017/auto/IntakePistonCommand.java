@@ -14,15 +14,15 @@ public class IntakePistonCommand extends InstantCommand {
     public IntakePistonCommand(boolean actuate) {
         super();
         this.actuate = actuate;
-        requires(Robot.intake);
+       // requires(Robot.intake);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	if(actuate)
-    		Robot.intake.extendIntake();
-    	else
-    		Robot.intake.retractIntake();
-    }
+//    	if(actuate)
+//    		Robot.intake.extendIntake();
+//    	else
+//    		Robot.intake.retractIntake();
+//    }
 
-}
+}}
